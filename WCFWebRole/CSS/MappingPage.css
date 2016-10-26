@@ -1,0 +1,33 @@
+﻿html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    /*background-color:  aqua;*/
+}
+
+#map {
+    height: 100%;
+    
+}
+.ULClass{
+    color:   black;   
+}
+.LIClass{
+    color:   magenta;      
+    background-color:transparent;
+    font-weight:  bold;
+    font-size:  medium; 
+    
+    margin-bottom:  2px;
+}
+
+.LabelClass
+{
+    font-weight:  bold;
+    font-size:  x-large;
+}
+
+/*#LoginPage
+{
+    background-color:  aqua;
+}*/
