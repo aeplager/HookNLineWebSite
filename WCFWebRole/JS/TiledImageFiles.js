@@ -92,7 +92,7 @@ function DisplayKMLPoint(evt)
         sLongitude = sLongitude.substring(sLongitude.indexOf(" ", 0), sLongitude.length - sLatitude.indexOf(" ", 0));
         sLongitude = sLongitude.substring(1, sLongitude.length - 1);
         //alert(myLatlng.latitude);
-
+        
         urlMain = '/WCFWebService.svc/SpecificWayPointGetInfo/';
         Data = '?Latitude=' + sLatitude + '&Longitude=' + sLongitude;
         //Data = '?Latitude="28"/Longitude="95"';        
@@ -124,8 +124,7 @@ function DisplayKMLPoint(evt)
                         LngP = Result[i].Longitude;
                         NameP = Result[i].WayPointName;
                         FishP = Result[i].FishingText;                        
-                        BestWindP = Result[i].BestWindText;
-                        TypeOfFishingP = Result[i].TypeOfFishingText;
+                        BestWindP = Result[i].BestWindText;                        TypeOfFishingP = Result[i].TypeOfFishingText;
                         WayPointTypeID = Result[i].WayPointTypeID;
                         WayPointTypeName = Result[i].WayPointTypeName;                        
                         break;
@@ -135,11 +134,11 @@ function DisplayKMLPoint(evt)
                         var StringforDisplay = '';
                         var CurrentDate = new Date();
                         var StringforDisplay = "";                        
-                        StringforDisplay = '<style> #WeatherTable {font-size: large;} p {font-size: large; word-wrap: break-word}</style>';
+                        StringforDisplay = '<style> #WeatherTable {font-size: "2";} p {font-size: "2"; word-wrap: break-word}</style>';
                         StringforDisplay = '';
                         if (WayPointTypeID == 1)  // Normal Way Point
                         {
-                            StringforDisplay = StringforDisplay + 'WayPoint:  ' + NameP;
+                            StringforDisplay = StringforDisplay + '<font size="2">WayPoint:  ' + NameP + '</font>';
                             StringforDisplay = StringforDisplay + '<hr style="height:2px; visibility:hidden;" />';
                             if (FishP != '') { StringforDisplay = StringforDisplay + 'Fish:  ' + FishP + '<hr style="height:2px; visibility:hidden;" />'; }
 
@@ -147,11 +146,11 @@ function DisplayKMLPoint(evt)
                             if (TypeOfFishingP != '') { StringforDisplay = StringforDisplay + 'Type of Fishing:  ' + TypeOfFishingP + '<hr style="height:2px; visibility:hidden;" />'; }
                         }
                         else if (WayPointTypeID == 2) {  // WayPoint without underlying data                
-                            StringforDisplay = StringforDisplay + 'WayPoint:  ' + NameP;
+                            StringforDisplay = StringforDisplay + '<font size="2">WayPoint:  ' + NameP + '</font>';
                             StringforDisplay = StringforDisplay + '<hr style="height:2px; visibility:hidden;" />';
                         }
                         else if (WayPointTypeID == 3) {  // Marina
-                            StringforDisplay = StringforDisplay + 'WayPoint:  ' + NameP;
+                            StringforDisplay = StringforDisplay + '<font size="2">WayPoint:  ' + NameP + '</font>';
                             StringforDisplay = StringforDisplay + '<hr style="height:2px; visibility:hidden;" />';
                             if (FishP != '') { StringforDisplay = StringforDisplay + 'Detail:  ' + FishP + '<hr style="height:2px; visibility:hidden;" />'; }
                             if (BestWindP != '') { StringforDisplay = StringforDisplay + 'Best Wind Direction:  ' + BestWindP + '<hr style="height:2px; visibility:hidden;" />'; }

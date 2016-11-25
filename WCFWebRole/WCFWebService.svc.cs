@@ -8,6 +8,8 @@ using System.Text;
 using System.Data;//
 using System.Configuration;
 using System.Data.SqlClient;
+using GemBox.Email;
+using GemBox.Email.Smtp;
 
 namespace WCFWebRole
 {
@@ -269,6 +271,64 @@ namespace WCFWebRole
             }
             return StatusPasswordSet;
         }
+
+        public string SendEmailForNewPassword(string UserName)
+        {
+            string RestChar;
+            RestChar = "FAIL";
+            DataSet ds = new DataSet();
+            string ConnectionString = ReturnConnectionString();
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    string SqlCommandText = "[WebSite].[UserNameSetupUpsert]";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = SqlCommandText;
+                    cmd.Parameters.AddWithValue("@UserName", UserName);
+                    cmd.Connection = con;
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        da.Fill(ds, "SelectionItems");
+                    }
+                }
+            }
+            if (ds != null)
+            {
+                if (ds.Tables.Count > 0)
+                {
+                    if (ds.Tables["SelectionItems"].Rows.Count > 0)
+                    {
+                        foreach (DataRow dr in ds.Tables["SelectionItems"].Rows)
+                        {
+                            RestChar = dr["RandChar"].ToString();
+                            break;
+                        }
+                    }
+                }
+            }
+            try
+            {
+                ComponentInfo.SetLicense("FREE-LIMITED-KEY");
+                //Console.WriteLine("Creating message...");
+                MailMessage message = new MailMessage(new MailAddress("info@hooknline.net", "Joe Trombley"), new MailAddress(UserName, "Adam Plager"));
+                message.Subject = "Hook N Line Reset Password";
+                string url = "https://hooknline.azurewebsites.net/";
+                message.BodyText = "Please go to the following URL to reset your password:   " + url + "HookNLinePasswordReset.html?" + RestChar;
+                using (SmtpClient smtp = new SmtpClient("smtp.office365.com"))
+                {
+                    smtp.Connect();
+                    //Console.WriteLine("Connected.");
+                    smtp.Authenticate("info@hooknline.net", "G0gators#12");
+                    smtp.SendMessage(message);
+                }
+                return RestChar;
+            }
+            catch (Exception Ex)
+            {
+                return Ex.ToString();
+            }
+        }
         //***************************************************************************
         // Setting Password Information
         //***************************************************************************
@@ -329,47 +389,101 @@ namespace WCFWebRole
         //        return Ex.ToString();
         //    }
         //}
-        //public string SetNewPassword(string UserName, string ResetKey, string NewPassword)
+        public string SetNewestPassword(string ResetKey, string NewPassword)
+        {
+            string StatusPasswordSet;
+            StatusPasswordSet = "FAIL";
+            DataSet ds = new DataSet();
+            //string NewPassword = "SHIT";
+            string ConnectionString = ReturnConnectionString();
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    string SqlCommandText = "[WebSite].[UserNameResetUpsert]";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = SqlCommandText;
+                    cmd.Parameters.AddWithValue("@ResetKey", ResetKey);
+                    cmd.Parameters.AddWithValue("@NewPassword", NewPassword);
+                    cmd.Connection = con;
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        da.Fill(ds, "SelectionItems");
+                    }
+                }
+            }
+            if (ds != null)
+            {
+                if (ds.Tables.Count > 0)
+                {
+                    if (ds.Tables["SelectionItems"].Rows.Count > 0)
+                    {
+                        foreach (DataRow dr in ds.Tables["SelectionItems"].Rows)
+                        {
+                            StatusPasswordSet = dr["Status"].ToString();
+                            break;
+                        }
+                    }
+                }
+            }
+            return StatusPasswordSet;
+
+        }
+            
+        //public string SetNewPassword(string ResetKey, string NewPassword)
         //{
-        //    string StatusPasswordSet;
-        //    StatusPasswordSet = "FAIL";
-        //    DataSet ds = new DataSet();
-        //    string ConnectionString = ReturnConnectionString();
-        //    using (SqlConnection con = new SqlConnection(ConnectionString))
-        //    {
-        //        using (SqlCommand cmd = new SqlCommand())
-        //        {
-        //            string SqlCommandText = "[WebSite].[UserNameResetUpsert]";
-        //            cmd.CommandType = CommandType.StoredProcedure;
-        //            cmd.CommandText = SqlCommandText;
-        //            cmd.Parameters.AddWithValue("@ResetKey", ResetKey);
-        //            cmd.Parameters.AddWithValue("@NewPassword", NewPassword);
-        //            cmd.Connection = con;
-        //            using (SqlDataAdapter da = new SqlDataAdapter(cmd))
-        //            {
-        //                da.Fill(ds, "SelectionItems");
-        //            }
-        //        }
-        //    }
-        //    if (ds != null)
-        //    {
-        //        if (ds.Tables.Count > 0)
-        //        {
-        //            if (ds.Tables["SelectionItems"].Rows.Count > 0)
-        //            {
-        //                foreach (DataRow dr in ds.Tables["SelectionItems"].Rows)
-        //                {
-        //                    StatusPasswordSet = dr["Status"].ToString();
-        //                    break;
-        //                }
-        //            }
-        //        }
-        //    }
-        //    return StatusPasswordSet;
+        //    //string StatusPasswordSet;
+        //    //StatusPasswordSet = "FAIL";
+        //    //DataSet ds = new DataSet();
+        //    //string ConnectionString = ReturnConnectionString();
+        //    //using (SqlConnection con = new SqlConnection(ConnectionString))
+        //    //{
+        //    //    using (SqlCommand cmd = new SqlCommand())
+        //    //    {
+        //    //        string SqlCommandText = "[WebSite].[UserNameResetUpsert]";
+        //    //        cmd.CommandType = CommandType.StoredProcedure;
+        //    //        cmd.CommandText = SqlCommandText;
+        //    //        cmd.Parameters.AddWithValue("@ResetKey", ResetKey);
+        //    //        cmd.Parameters.AddWithValue("@NewPassword", NewPassword);
+        //    //        cmd.Connection = con;
+        //    //        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+        //    //        {
+        //    //            da.Fill(ds, "SelectionItems");
+        //    //        }
+        //    //    }
+        //    //}
+        //    //if (ds != null)
+        //    //{
+        //    //    if (ds.Tables.Count > 0)
+        //    //    {
+        //    //        if (ds.Tables["SelectionItems"].Rows.Count > 0)
+        //    //        {
+        //    //            foreach (DataRow dr in ds.Tables["SelectionItems"].Rows)
+        //    //            {
+        //    //                StatusPasswordSet = dr["Status"].ToString();
+        //    //                break;
+        //    //            }
+        //    //        }
+        //    //    }
+        //    //}
+        //    return "SUCCESS";
 
         //}
 
+        //private String BaseURL()
+        //{
+        //    try
+        //    {
+        //        String ReturnBaseURL = ConfigurationManager.AppSettings["ReturnBaseString"];
+        //        return ReturnBaseURL;
 
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        String ReturnBaseURL = "https://hooknline.azurewebsites.net/";
+        //        return ReturnBaseURL;
+        //    }
+        //}
 
 
         private String ReturnConnectionString()

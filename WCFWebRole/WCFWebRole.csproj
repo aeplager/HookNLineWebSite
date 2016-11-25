@@ -101,6 +101,7 @@
   <ItemGroup>
     <Content Include="CSS\MappingPage.css" />
     <Content Include="CSS\style.css" />
+    <Content Include="HookNLinePasswordReset.html" />
     <Content Include="images\gpsloc.png" />
     <Content Include="images\gpslocSmall.png" />
     <Content Include="images\gpslocSmaller.png" />

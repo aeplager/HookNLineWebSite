@@ -61,6 +61,20 @@ namespace WCFWebRole
             BodyStyle = WebMessageBodyStyle.Bare)]
         string LoginValidation(string UserName, string Password);
 
+        [WebGet(UriTemplate = "/SetNewestPassword/?ResetKey={ResetKey}&NewPassword={NewPassword}",
+          RequestFormat = WebMessageFormat.Json,
+          ResponseFormat = WebMessageFormat.Json,
+          BodyStyle = WebMessageBodyStyle.Bare)]
+        string SetNewestPassword(string ResetKey, string NewPassword);
+
+        [WebGet(UriTemplate = "/SendEmailForNewPassword/?UserName={UserName}",
+          RequestFormat = WebMessageFormat.Json,
+          ResponseFormat = WebMessageFormat.Json,
+          BodyStyle = WebMessageBodyStyle.Bare)]
+        string SendEmailForNewPassword(string UserName);
+
+
+
         
 
         // TODO: Add your service operations here

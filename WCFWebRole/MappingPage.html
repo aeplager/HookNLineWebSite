@@ -162,14 +162,15 @@ function SetMarkerMain(latBase, lngBase, msg)
         <br />
             <label>User name</label>
             <br />
-            <input type="text" name="usr" placeholder="username">
+            <input id="UserNameEntry" type="text" name="usr" placeholder="username">
             <br />
             <label>Password</label>
             <br />
-            <input type="password" name="pword" placeholder="password">
+            <input id="PassWrdEntry" type="password" name="pword" placeholder="password">
             <br />
             <input type="button" value="Login" onclick="LoginMain();" />
-            
+            <br />            
+            <input type="button" value="Reset Password" onclick="ResetPassword();" />
         
     </div>
     <div id="map" hidden="true"></div>
