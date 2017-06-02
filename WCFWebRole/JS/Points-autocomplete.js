@@ -1,10 +1,10 @@
 ﻿$(function () {
     var MapMapDefinition;
-    MapMapDefinition=1
+    MapMapDefinition = 1  
     urlMain = '/WCFWebService.svc/AllWayPointsGetInfo';
-    
-   //Data = '?MapMapDefinition=+ ' = '"1"';
-    //urlMain = urlMain + Data;
+    Data = '?MapSelection=' + MapSelection;
+    //    Data = '?MapDefinition=' = '"' + MapSelection + '"';
+    urlMain = urlMain + Data;
     var currencies = [];
     $.ajax({
         type: "GET",

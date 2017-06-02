@@ -7,7 +7,7 @@
     //controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
     // controlUI.style.marginBottom = '22px';
     //controlUI.style.textAlign = 'center';
-
+    
 
     // Set CSS for the control border.
     var controlUI = document.createElement('div');
@@ -36,28 +36,15 @@
         });
     //controlUL.appendChild(controlLI1);
 
-    var controlLI2 = document.createElement('LI');
-    controlLI2.innerHTML = "Pick A Spot";
-    controlLI2.className = "LIClass";
-    controlLI2.addEventListener('click', function () {
-        CurrentZoom = map.getZoom();
-        
-        CurrentLat  = map.getCenter().lat();
-        CurrentLng = map.getCenter().lng();        
-        document.getElementById('map').style.display = "none";
-        $("#SearchableMenu").show();
-        //$("#map").hide();
-        //document.getElementById("map").style.width = "0%"
-        $('#autocomplete').val('');        
-        //document.getElementsById("autocomplete").value = "";
-        
-    });
-    controlUL.appendChild(controlLI2);
+
 
     var controlLI3 = document.createElement('LI');
     controlLI3.innerHTML = "Weather Real Time";
+    controlLI3.id = "WRT";
     controlLI3.className = "LIClass";
-    controlLI3.addEventListener('click', function () {        
+    controlLI3.addEventListener('click', function () {
+        CurrentLat = map.getCenter().lat();
+        CurrentLng = map.getCenter().lng();
         DisplayRealTimeWeather();
     });
     controlUL.appendChild(controlLI3);
@@ -65,13 +52,101 @@
     
 
     var controlLI4 = document.createElement('LI');
-    controlLI4.innerHTML = "Weather Forecast";    
+    controlLI4.innerHTML = "Weather Forecast";
+    controlLI4.id = "WF";
     controlLI4.className = "LIClass";
     controlLI4.addEventListener('click', function () {
+        CurrentLat = map.getCenter().lat();
+        CurrentLng = map.getCenter().lng();        
         DisplayWeatherForecast();
     });
     controlUL.appendChild(controlLI4);
        
+    
+    var controlLI2 = document.createElement('LI');    
+    controlLI2.innerHTML = "Pick A Spot";
+    controlLI2.className = "LIClass";
+    controlLI2.id = "PickASpot1";
+    controlLI2.addEventListener('click', function () {
+        CurrentZoom = map.getZoom();
+
+        CurrentLat = map.getCenter().lat();
+        CurrentLng = map.getCenter().lng();
+        document.getElementById('map').style.display = "none";
+        $("#SearchableMenu").show();
+        //$("#map").hide();
+        //document.getElementById("map").style.width = "0%"
+        $('#autocomplete').val('');
+        //document.getElementsById("autocomplete").value = "";
+
+    });
+    controlUL.appendChild(controlLI2);
+
+
+    var controlLI70 = document.createElement('LI');
+    controlLI70.id = "LM";
+    controlLI70.innerHTML = "Locate Me";
+    controlLI70.className = "LIClass";
+    controlLI70.addEventListener('click', function () {
+        //GoToCurrentPosition();
+        var StringforDisplay = "Starting";
+        //alert(StringforDisplay);
+        //var myLatLng = { lat: 29.481, lng: -94.917 };
+        if (navigator.geolocation) {
+
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                //CurrentMarker.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+                //map.setCenter({ lat: 29.481, lng: -94.917 });
+                map.setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
+                //CurrentMarker.setMap(map);
+                //alert("Finished Internal 6");
+            }, function () {
+                handleLocationError(true, infoWindow, map.getCenter());
+            });
+        } else {
+            // Browser doesn't support Geolocation
+            handleLocationError(false, infoWindow, map.getCenter());
+        }
+    });
+    controlUL.appendChild(controlLI70);
+
+    //var controlLI80 = document.createElement('LI');
+    //controlLI80.innerHTML = "Get Center 2";
+    //controlLI80.className = "LIClass";
+    //controlLI80.addEventListener('click', function () {
+    //    //GoToCurrentPosition();
+    //    var StringforDisplay = "Starting";
+    //    //alert(StringforDisplay);
+    //    //var myLatLng = { lat: 29.481, lng: -94.917 };
+    //    if (navigator.geolocation) {
+
+    //        navigator.geolocation.getCurrentPosition(function (position) {
+    //            var Test = map.getCenter();
+
+                
+    //            //var pos = {
+    //            //    lat: position.coords.latitude,
+    //            //    lng: position.coords.longitude
+    //            //};
+    //            ////CurrentMarker.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+    //            ////map.setCenter({ lat: 29.481, lng: -94.917 });
+    //            //map.setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
+    //            //CurrentMarker.setMap(map);
+    //            //alert("Finished Internal 6");
+    //        }, function () {
+    //            handleLocationError(true, infoWindow, map.getCenter());
+    //        });
+    //    } else {
+    //        // Browser doesn't support Geolocation
+    //        handleLocationError(false, infoWindow, map.getCenter());
+    //    }
+    //});
+    //controlUL.appendChild(controlLI80);
+
 
     controlUI.appendChild(controlUL);    
     
@@ -103,6 +178,7 @@ function DisplayMap()
 function LoginMain()
 {    
     try {
+        //document.body.style.zoom = 1.0;
         urlMain = '/WCFWebService.svc/LoginValidation/';
         var UserName = $("#UserNameEntry").val();
         var Password = $("#PassWrdEntry").val();
@@ -138,36 +214,25 @@ function LoginMain()
         ErrorFunction(e.message);
     }
 }
-function CancelButton() {
-    try {
-        $("#map").show();
-        document.getElementById('map').style.display = "block";
-        initMap();
-      
-        //var myLatLng = { lat: CurrentLat, lng: CurrentLng };
-        //var NewPos = new google.maps.LatLng(CurrentLat, CurrentLng);
-       // map.setCenter(new google.maps.LatLng(37.4419, -122.1419));
-        //MoveToPosition(CurrentLat, CurrentLng);
-        //map.setPosition(NewPos);
-    }
-    catch (e) {
-        ErrorFunction(e.message);
-    }
-}
+
 function ResetPassword()
 {
-    try{
+    try {        
         urlMain = '/WCFWebService.svc/SendEmailForNewPassword/';
-        var UserName = $("#UserNameEntry").val();        
+        var UserName = $("#UserNameEntry").val();
+        if (UserName.trim() == '') {
+            alert('Please enter a user name');
+        }
+        else{
         Data = '?UserName=' + UserName;
-        alert("Sending your user name and password");
+        //alert("Sending your user name and passwordafddafa");
         urlMain = urlMain + Data;
         jQuery.ajax({
             type: 'GET',
             contentType: 'application/json;  charset=utf-8',
             url: urlMain,
             dataType: 'json',
-            async: false,
+            async: true,
             success: function (Result) {
                 try {
                     var Sheet = Result;
@@ -177,10 +242,12 @@ function ResetPassword()
             error: function (e) { alert("Error"); alert(e.responseText); }
         });
         alert("Please wait 5 - 10 minutes for an email with instructions on how to reset your password");
+        }
     }
     catch (e) {
         ErrorFunction(e.message);
     }
+    
 }
 function SubmitPassword() {
     try {
@@ -229,7 +296,7 @@ function SubmitPassword() {
             alert("Please make sure that the passwords are the same");
         }
         if (Status == "PASS") {
-            alert("Password updated");
+            //alert("Password updated");
 
             window.location = getBaseURL() + "MappingPage.html"
         }
@@ -241,3 +308,4 @@ function SubmitPassword() {
         errorReport(e);
     }
 }
+

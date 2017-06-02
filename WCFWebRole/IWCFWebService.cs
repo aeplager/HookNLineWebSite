@@ -49,11 +49,11 @@ namespace WCFWebRole
             BodyStyle = WebMessageBodyStyle.Bare)]
         List<WeatherForecast> WeatherForecastGetInfo();
 
-        [WebGet(UriTemplate = "/AllWayPointsGetInfo",
+        [WebGet(UriTemplate = "/AllWayPointsGetInfo/?MapSelection={MapSelection}",
           RequestFormat = WebMessageFormat.Json,
           ResponseFormat = WebMessageFormat.Json,
           BodyStyle = WebMessageBodyStyle.Bare)]
-        List<WayPoints> AllWayPointsGetInfo();
+        List<WayPoints> AllWayPointsGetInfo(int MapSelection);
 
         [WebGet(UriTemplate = "/LoginValidation/?UserName={UserName}&Password={Password}",
             RequestFormat = WebMessageFormat.Json,

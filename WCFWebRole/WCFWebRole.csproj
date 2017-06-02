@@ -99,8 +99,69 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\de\Microsoft.Data.Edm.resources.dll" />
+    <Content Include="bin\de\Microsoft.Data.OData.resources.dll" />
+    <Content Include="bin\de\Microsoft.Data.Services.Client.resources.dll" />
+    <Content Include="bin\de\System.Spatial.resources.dll" />
+    <Content Include="bin\es\Microsoft.Data.Edm.resources.dll" />
+    <Content Include="bin\es\Microsoft.Data.OData.resources.dll" />
+    <Content Include="bin\es\Microsoft.Data.Services.Client.resources.dll" />
+    <Content Include="bin\es\System.Spatial.resources.dll" />
+    <Content Include="bin\fr\Microsoft.Data.Edm.resources.dll" />
+    <Content Include="bin\fr\Microsoft.Data.OData.resources.dll" />
+    <Content Include="bin\fr\Microsoft.Data.Services.Client.resources.dll" />
+    <Content Include="bin\fr\System.Spatial.resources.dll" />
+    <Content Include="bin\GemBox.Email.dll" />
+    <Content Include="bin\GemBox.Email.xml" />
+    <Content Include="bin\it\Microsoft.Data.Edm.resources.dll" />
+    <Content Include="bin\it\Microsoft.Data.OData.resources.dll" />
+    <Content Include="bin\it\Microsoft.Data.Services.Client.resources.dll" />
+    <Content Include="bin\it\System.Spatial.resources.dll" />
+    <Content Include="bin\ja\Microsoft.Data.Edm.resources.dll" />
+    <Content Include="bin\ja\Microsoft.Data.OData.resources.dll" />
+    <Content Include="bin\ja\Microsoft.Data.Services.Client.resources.dll" />
+    <Content Include="bin\ja\System.Spatial.resources.dll" />
+    <Content Include="bin\ko\Microsoft.Data.Edm.resources.dll" />
+    <Content Include="bin\ko\Microsoft.Data.OData.resources.dll" />
+    <Content Include="bin\ko\Microsoft.Data.Services.Client.resources.dll" />
+    <Content Include="bin\ko\System.Spatial.resources.dll" />
+    <Content Include="bin\Microsoft.Azure.KeyVault.Core.dll" />
+    <Content Include="bin\Microsoft.Azure.KeyVault.Core.xml" />
+    <Content Include="bin\Microsoft.Data.Edm.dll" />
+    <Content Include="bin\Microsoft.Data.Edm.xml" />
+    <Content Include="bin\Microsoft.Data.OData.dll" />
+    <Content Include="bin\Microsoft.Data.OData.xml" />
+    <Content Include="bin\Microsoft.Data.Services.Client.dll" />
+    <Content Include="bin\Microsoft.Data.Services.Client.xml" />
+    <Content Include="bin\Microsoft.WindowsAzure.Diagnostics.dll" />
+    <Content Include="bin\Microsoft.WindowsAzure.ServiceRuntime.dll" />
+    <Content Include="bin\Microsoft.WindowsAzure.Storage.dll" />
+    <Content Include="bin\Microsoft.WindowsAzure.Storage.pdb" />
+    <Content Include="bin\Microsoft.WindowsAzure.Storage.xml" />
+    <Content Include="bin\MonAgentListener.dll" />
+    <Content Include="bin\Newtonsoft.Json.dll" />
+    <Content Include="bin\Newtonsoft.Json.xml" />
+    <Content Include="bin\ru\Microsoft.Data.Edm.resources.dll" />
+    <Content Include="bin\ru\Microsoft.Data.OData.resources.dll" />
+    <Content Include="bin\ru\Microsoft.Data.Services.Client.resources.dll" />
+    <Content Include="bin\ru\System.Spatial.resources.dll" />
+    <Content Include="bin\System.Spatial.dll" />
+    <Content Include="bin\System.Spatial.xml" />
+    <Content Include="bin\WCFWebRole.dll" />
+    <Content Include="bin\WCFWebRole.pdb" />
+    <Content Include="bin\zh-Hans\Microsoft.Data.Edm.resources.dll" />
+    <Content Include="bin\zh-Hans\Microsoft.Data.OData.resources.dll" />
+    <Content Include="bin\zh-Hans\Microsoft.Data.Services.Client.resources.dll" />
+    <Content Include="bin\zh-Hans\System.Spatial.resources.dll" />
+    <Content Include="bin\zh-Hant\Microsoft.Data.Edm.resources.dll" />
+    <Content Include="bin\zh-Hant\Microsoft.Data.OData.resources.dll" />
+    <Content Include="bin\zh-Hant\Microsoft.Data.Services.Client.resources.dll" />
+    <Content Include="bin\zh-Hant\System.Spatial.resources.dll" />
     <Content Include="CSS\MappingPage.css" />
     <Content Include="CSS\style.css" />
+    <Content Include="googlemaps.html" />
+    <Content Include="leaflet.html" />
+    <Content Include="TEST-Main.html" />
     <Content Include="HookNLinePasswordReset.html" />
     <Content Include="images\gpsloc.png" />
     <Content Include="images\gpslocSmall.png" />
@@ -112,7 +173,9 @@
     <Content Include="JS\Points-autocomplete.js" />
     <Content Include="JS\TiledImageFiles.js" />
     <Content Include="JS\WeatherFunctions.js" />
+    <Content Include="Dickenson.html" />
     <Content Include="MappingPage.html" />
+    <Content Include="Test.html" />
     <Content Include="TestPage.html" />
     <Content Include="WCFAjax.svc" />
     <Content Include="WCFWebService.svc" />
@@ -138,6 +201,7 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="bin\WCFWebRole.dll.config" />
     <None Include="Properties\PublishProfiles\hooknline - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

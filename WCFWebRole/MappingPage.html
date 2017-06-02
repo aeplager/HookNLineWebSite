@@ -1,8 +1,8 @@
-﻿<!DOCTYPE html>
-<html>
+﻿<html>
 <head>
-    <title>Simple Map</title>
-    <meta name="viewport" content="initial-scale=1.0">
+    <title>Map 20</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    <!--<meta name="viewport" content="initial-scale=1.0">-->
     <meta charset="utf-8">
     <!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&libraries=places,geometry"></script>-->
     <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>-->
@@ -12,6 +12,7 @@
     <script src="JS/TiledImageFiles.js" ></script>
     <script src="JS/WeatherFunctions.js"></script>    
     <link rel="stylesheet" type="text/css" href="CSS/MappingPage.css" />
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <!--Autocomplete Specific-->
     
     <script type="text/javascript" src="js/jquery.autocomplete.min.js"></script>
@@ -24,6 +25,7 @@
     <script>
         var map;
         var marker;
+        var CurrentMarker;
         var infowindow;
         var myLatLng;
         var KMLAdded;
@@ -32,21 +34,30 @@
         var BaseLngMarker = -75.6107;
         var CurrentLat = 29.376639;
         var CurrentLng = -95.097300;
+        var MainMapTypeId = 'satellite'
+        var MapSelection = 1;
+        
 function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: CurrentLat, lng: CurrentLng },
         zoom: CurrentZoom,
-        mapTypeId: 'satellite'
+        mapTypeId:  MainMapTypeId 
     });
-    infoWindow = new google.maps.InfoWindow({ map: map });
+    infoWindow = new google.maps.InfoWindow({
+        map: map,
+        maxWidth: 750
+    });
 
     myLatLng = { lat: BaseLatMarker, lng: BaseLngMarker };
 
     
-    contentString = "TEST 1";
+    contentString = '<div class="infoWindowDiv"></div>';
     infowindow = new google.maps.InfoWindow({
-        content: contentString
+        content: contentString,
+        maxWidth: 750
     });
+  
+    //alert("TEST 2");
     var image = 'images/gpsloc.png';
     marker = new google.maps.Marker({
         position: myLatLng,
@@ -72,7 +83,41 @@ function initMap() {
     infowindow.close();
     
     //infowindow.open(map, marker);
-
+    //alert("Version 4");
+    MainMapTypeId = map.getMapTypeId();    
+    map.addListener('maptypeid_changed', function () {
+        // 3 seconds after the center of the map has changed, pan back to the
+        // marker.
+        //ResetMapType();
+        MainMapTypeId = map.getMapTypeId();
+        MainMapTypeId = map.getMapTypeId();
+        if (MainMapTypeId == 'satellite') {
+            $("#WRT").attr('class', 'LIClass');
+            $("#WF").attr('class', 'LIClass');
+            $("#PickASpot1").attr('class', 'LIClass');
+            $("#LM").attr('class', 'LIClass');
+        }
+        else if (MainMapTypeId == 'terrain')
+        {
+            $("#WRT").attr('class', 'LIClassBlack');
+            $("#WF").attr('class', 'LIClassBlack');
+            $("#PickASpot1").attr('class', 'LIClassBlack');
+            $("#LM").attr('class', 'LIClassBlack');
+        }            
+        else if (MainMapTypeId == 'hybrid') {
+            $("#WRT").attr('class', 'LIClass');
+            $("#WF").attr('class', 'LIClass');
+            $("#PickASpot1").attr('class', 'LIClass');
+            $("#LM").attr('class', 'LIClass');
+        }
+        else {
+            $("#WRT").attr('class', 'LIClassBlack');
+            $("#WF").attr('class', 'LIClassBlack');
+            $("#PickASpot1").attr('class', 'LIClassBlack');
+            $("#LM").attr('class', 'LIClassBlack');
+        }
+  
+    });
     // Try HTML5 geolocation.
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
@@ -80,22 +125,26 @@ function initMap() {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
-            navigator.geolocation.watchPosition
+           // navigator.geolocation.watchPosition
             var image;// = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
             image = "Images/gpsloc.png";
             image = "images/gpslocSmaller.png";
             var myLatLng = { lat: BaseLatMarker, lng: BaseLngMarker };
-            var marker = new google.maps.Marker({
+            CurrentMarker = new google.maps.Marker({
                 position: myLatLng,
                 map: map,
                 icon: image,
                 title: 'Current Position'
             });
-            marker.setPosition(pos);
-            marker.setMap(map);
-            //infoWindow.setPosition(pos);
-            //infoWindow.setContent('Location found.');            
-            
+            CurrentMarker.setPosition(pos);
+            CurrentMarker.setMap(map);
+            infoWindow.setPosition(pos);
+            var options = { maximumAge: 7000000, timeout: 30000, enableHighAccuracy: true };
+            geoLoc = navigator.geolocation;
+            //watchID = geoLoc.watchPosition(showLocation, errorHandler, options);
+            navigator.geolocation.watchPosition(MovePosition, errorHandler, options);
+            infoWindow.setContent('Location found.');            
+            infoWindow.close();
             //map.setCenter(pos);
         }, function () {
             handleLocationError(true, infoWindow, map.getCenter());
@@ -117,16 +166,192 @@ function initMap() {
 
     SetMarkerMain(BaseLatMarker, BaseLngMarker, 'test');
     
+    MainMapTypeId = map.getMapTypeId();
     
 }
+function PickAPoint() {
+    try {
+        //document.body.style.zoom = 1.0;
+        //alert("TEST");
+        var Latitude = document.getElementById('LatitudeLabel').innerHTML;
+        var Longitude = document.getElementById('LongitudeLabel').innerHTML;
+        if ((Longitude == '') || (Latitude == '')) {
+            alert('Please select a point');
+            return
+        }
 
+        document.getElementById('map').style.display = "block";
+
+        initMap();
+        $("#SearchableMenu").hide();
+        //document.getElementById("map").style.width = "100%"
+        //var evt = new google.maps.LatLng(Latitude, Longitude);
+        //var myLatlng = new google.maps.LatLng(map, evt.latLng.Latitude);
+        var Data;
+        var urlMain;
+        var sLatitude = Latitude;//evt.latLng.toString();
+        var sLongitude = Longitude;
+        //alert(myLatlng.latitude);        
+        urlMain = '/WCFWebService.svc/SpecificWayPointGetInfo/';
+        Data = '?Latitude=' + sLatitude + '&Longitude=' + sLongitude;
+        //Data = '?Latitude="28"/Longitude="95"';        
+        urlMain = urlMain + Data;
+        jQuery.ajax({
+            type: 'GET',
+            contentType: 'application/json;  charset=utf-8',
+            url: urlMain,
+            dataType: 'json',
+            async: false,
+            success: function (Result) {
+                try {
+                    var test;
+                    var WayPointName;
+                    var TypeOfFishingP = "";
+                    var LatP;
+                    var LngP;
+                    var NameP;
+                    var FishP;
+                    var BestWindP;
+                    var TypeOfFishingP;
+                    var WayPointTypeID;
+                    var WayPointTypeName;
+                    WayPointName = Result[0].WayPointName;
+                    for (var i in Result) {
+                        //var serie = { WayPointID: Result[i].WayPointID, WayPointName: Result[i].WayPointName, Lat: Result[i].Latitude, Lng: Result[i].Longitude };
+                        TypeOfFishingP = Result[i].TypeOfFishingText;
+                        LatP = Result[i].Latitude;
+                        LngP = Result[i].Longitude;
+                        NameP = Result[i].WayPointName;
+                        FishP = Result[i].FishingText;
+                        BestWindP = Result[i].BestWindText;
+                        TypeOfFishingP = Result[i].TypeOfFishingText;
+                        WayPointTypeID = Result[i].WayPointTypeID;
+                        WayPointTypeName = Result[i].WayPointTypeName;
+                        break;
+                    }
+
+                    if ((LatP != 0) && (LngP != 0)) {
+                        var StringforDisplay = '';
+                        var CurrentDate = new Date();
+                        var StringforDisplay = "";
+                        StringforDisplay = '<div class="infoWindowDiv">';
+                        //StringforDisplay = '<style> #WeatherTable {font-size: large;} p {font-size: large; word-wrap: break-word}</style>';
+                        
+                        if (WayPointTypeID == 1)  // Normal Way Point
+                        {
+                            StringforDisplay = StringforDisplay + 'WayPoint:  ' + NameP;
+                            StringforDisplay = StringforDisplay + '<hr style="height:2px; visibility:hidden;" />';
+                            if (FishP != '') { StringforDisplay = StringforDisplay + 'Fish:  ' + FishP + '<hr style="height:2px; visibility:hidden;" />'; }
+
+                            if (BestWindP != '') { StringforDisplay = StringforDisplay + 'Best Wind Direction:  ' + BestWindP + '<hr style="height:2px; visibility:hidden;" />'; }
+                            if (TypeOfFishingP != '') { StringforDisplay = StringforDisplay + 'Type of Fishing:  ' + TypeOfFishingP + '<hr style="height:2px; visibility:hidden;" />'; }
+                        }
+                        else if (WayPointTypeID == 2) {  // WayPoint without underlying data                
+                            StringforDisplay = StringforDisplay + 'WayPoint:  ' + NameP;
+                            StringforDisplay = StringforDisplay + '<hr style="height:2px; visibility:hidden;" />';
+                        }
+                        else if (WayPointTypeID == 3) {  // Marina
+                            StringforDisplay = StringforDisplay + 'WayPoint:  ' + NameP;
+                            StringforDisplay = StringforDisplay + '<hr style="height:2px; visibility:hidden;" />';
+                            if (FishP != '') { StringforDisplay = StringforDisplay + 'Detail:  ' + FishP + '<hr style="height:2px; visibility:hidden;" />'; }
+                            if (BestWindP != '') { StringforDisplay = StringforDisplay + 'Best Wind Direction:  ' + BestWindP + '<hr style="height:2px; visibility:hidden;" />'; }
+
+                        }
+                        StringforDisplay = StringforDisplay + '</br><input type="submit" onClick="CloseInfoWindowAndMoveMarker();" value="Close">'
+                        StringforDisplay = StringforDisplay + '</div>';
+                        infowindow.close();
+                        infowindow = new google.maps.InfoWindow({
+                            content: StringforDisplay,
+                            maxWidth: 750
+                        });
+                        myLatLng = { lat: LatP, lng: LngP };
+                        marker.setPosition(myLatLng);
+                        infowindow.open(map, marker);
+                    }
+                }
+                catch (e) { alert(e); }
+            },
+            error: function (e) { alert("Error"); alert(e.responseText); }
+        });
+    }
+    catch (e) {
+        ErrorFunction(e);
+    }
+
+}
+
+function CancelButton() {
+    try {
+
+        document.getElementById('map').style.display = "block";
+        initMap();
+        $("#SearchableMenu").hide();
+    }
+    catch (e) {
+        ErrorFunction(e.message);
+    }
+}
+function ReturnCenterOfScreen()
+{
+    var ReturnCenter = map.getCenter();
+    ReturnCenterOfScreen = ReturnCenter;
+}
+function MovePosition()
+{
+    try{
+        //alert("Starting Move 6");        
+        if (navigator.geolocation) {
+            
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                CurrentMarker.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+                //CurrentMarker.setMap(map);
+                //alert("Finished Internal 6");
+            }, function () {
+                handleLocationError(true, infoWindow, map.getCenter());
+            });
+        } else {
+            // Browser doesn't support Geolocation
+            handleLocationError(false, infoWindow, map.getCenter());
+        }
+        
+    }
+    catch(e)
+    {
+        alert(e.message);
+    }
+}
+function showPosition(position) {
+    //x.innerHTML = "Latitude: " + position.coords.latitude +
+    //"<br>Longitude: " + position.coords.longitude;
+    var pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+    };
+    marker.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+
+    //marker.setMap(map);
+
+    //alert("Position updated to " + position.coords.latitude);
+}
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     infoWindow.setPosition(pos);
     infoWindow.setContent(browserHasGeolocation ?
                           'Error: The Geolocation service failed.' :
                           'Error: Your browser doesn\'t support geolocation.');
 }
+function errorHandler(err) {
+    if (err.code == 1) {
+        alert("Error: Access is denied!");
+    }
 
+    else if (err.code == 2) {
+        alert("Error: Position is unavailable!");
+    }
+}
 function ErrorFunction(e) {
     alert(e);
 }
@@ -139,9 +364,73 @@ function MoveToPosition(Lat, Lng)
     
     map.setCenter(pos);
 }
+function ResetMapType()
+{
+    try{
+        MainMapTypeId = map.getMapTypeId();
+        MainMapTypeId = map.getMapTypeId();
+        if (MainMapTypeId == 'satellite') {
+            $("#WRT").attr('class', 'LIClass');
+            $("#WF").attr('class', 'LIClass');
+            $("#PickASpot1").attr('class', 'LIClass');
+            $("#LM").attr('class', 'LIClass');
+        }
+        else if (MainMapTypeId == 'terrain') {
+            $("#WRT").attr('class', 'LIClassBlack');
+            $("#WF").attr('class', 'LIClassBlack');
+            $("#PickASpot1").attr('class', 'LIClassBlack');
+            $("#LM").attr('class', 'LIClassBlack');
+        }
+        else if (MainMapTypeId == 'hybrid') {
+            $("#WRT").attr('class', 'LIClass');
+            $("#WF").attr('class', 'LIClass');
+            $("#PickASpot1").attr('class', 'LIClass');
+            $("#LM").attr('class', 'LIClass');
+        }
+        else {
+            $("#WRT").attr('class', 'LIClassBlack');
+            $("#WF").attr('class', 'LIClassBlack');
+            $("#PickASpot1").attr('class', 'LIClassBlack');
+            $("#LM").attr('class', 'LIClassBlack');
+        }
+    }
+    catch (e) {
+        alert(e.message);
+    }
+}
 function RefreshMap()
 {
     map.refresh();
+}
+function GoToCurrentPosition() {
+    try {
+        alert("Me");
+        //var StringforDisplay = "Starting";
+        ////alert(StringforDisplay);
+        ////var myLatLng = { lat: 29.481, lng: -94.917 };
+        //if (navigator.geolocation) {
+
+        //    navigator.geolocation.getCurrentPosition(function (position) {
+        //        var pos = {
+        //            lat: position.coords.latitude,
+        //            lng: position.coords.longitude
+        //        };
+        //        //CurrentMarker.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+        //        //map.setCenter({ lat: 29.481, lng: -94.917 });
+        //        map.setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
+        //        //CurrentMarker.setMap(map);
+        //        //alert("Finished Internal 6");
+        //    }, function () {
+        //        handleLocationError(true, infoWindow, map.getCenter());
+        //    });
+        //} else {
+        //    // Browser doesn't support Geolocation
+        //    handleLocationError(false, infoWindow, map.getCenter());
+        //}
+    }
+    catch (e) {
+        alert(e.message);
+    }
 }
 function SetMarkerMain(latBase, lngBase, msg)
 {
@@ -168,10 +457,19 @@ function SetMarkerMain(latBase, lngBase, msg)
             <br />
             <input id="PassWrdEntry" type="password" name="pword" placeholder="password">
             <br />
-            <input type="button" value="Login" onclick="LoginMain();" />
-            <br />            
-            <input type="button" value="Reset Password" onclick="ResetPassword();" />
-        
+        <table class="LogInTable">
+            <tr>
+                <td>
+                    <input type="button" value="Login" width="100%" onclick="LoginMain();" />
+                </td>
+                <td>
+                        
+                </td>
+                <td>
+                    <input type="button" value="Reset Password" width="100%" onclick="ResetPassword();" />
+                </td>
+            </tr>
+        </table>
     </div>
     <div id="map" hidden="true"></div>
     <div id="SelectPoint">

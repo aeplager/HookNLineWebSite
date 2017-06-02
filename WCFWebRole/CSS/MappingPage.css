@@ -14,20 +14,84 @@
 }
 .LIClass{
     color:   magenta;      
-    background-color:transparent;
+    background-color: transparent;
     font-weight:  bold;
     font-size:  medium; 
+    padding-bottom: 20px;
     
     margin-bottom:  2px;
 }
 
+.LIClassBlack{
+    color:   magenta;      
+    background-color: transparent;
+    font-weight:  bold;
+    font-size:  medium; 
+    padding-bottom: 20px;
+    
+    margin-bottom:  2px;
+}
+
+.LIClassPink{
+    color:   pink;      
+    background-color: transparent;
+    font-weight:  bold;
+    font-size:  medium; 
+    padding-bottom: 20px;
+    
+    margin-bottom:  2px;
+}
 .LabelClass
 {
     font-weight:  bold;
     font-size:  x-large;
 }
-
+.LogInTable
+{
+    padding-left:  20px;
+    border-spacing: 15px;
+}
+.LogInTable, td
+{
+    padding-right:  200px;
+}
 /*#LoginPage
 {
     background-color:  aqua;
 }*/
+.LIClassBlack{
+    color:   magenta;      
+    background-color: transparent;
+    font-weight:  bold;
+    font-size:  medium; 
+    padding-bottom: 20px;
+    
+    margin-bottom:  2px;
+}
+.InfoTable{
+    width:  100%;
+    font-size:  small;
+}
+.InfoTableBorder
+{
+    /*width:  100%;*/
+    border: 1px solid black;
+    font-size:  small;
+}
+.InfoTableCellBorder
+{
+    width:  100%;
+    border: 1px solid black;
+    font-size:  small;
+}
+.InfoTableCell
+{
+    width:  100%;
+    font-size: small;
+}
+.infoWindowDiv
+{
+    width:  100%;
+    font-size:  small;
+    max-width: 750px; 
+}

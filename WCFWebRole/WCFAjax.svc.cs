@@ -41,7 +41,7 @@ namespace WCFWebRole
         [WebInvoke(ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped, UriTemplate = "/GetPlayersJson?id={id}")]
         public List<TEST> GetPlayersJson(string id)
         {
-            string SHIT;
+            
             //if (id.Length == 0) { SHIT = "Id is Null"; };
             return GetPlayers();
         }

@@ -106,7 +106,7 @@ namespace WCFWebRole
                             SelectionItemsinfo.WeatherStationID = Convert.ToInt32(dr["WeatherStationID"]);
                             SelectionItemsinfo.InsertDate = Convert.ToDateTime(dr["InsertDate"]);
                             SelectionItemsinfo.RecordedTime = Convert.ToDateTime(dr["RecordedTime"]);
-                            SelectionItemsinfo.RecordedTime = SelectionItemsinfo.RecordedTime.AddHours(-5);
+                            //SelectionItemsinfo.RecordedTime = SelectionItemsinfo.RecordedTime.AddHours(-5);
                             SelectionItemsinfo.RecordedTimeFormatted = SelectionItemsinfo.RecordedTime.ToString("MMMM dd, yyyy H:mm");
                             SelectionItemsinfo.TempUnit = dr["TempUnit"].ToString();
                             SelectionItemsinfo.TempValue = Convert.ToDouble(dr["TempValueF"]);
@@ -177,17 +177,18 @@ namespace WCFWebRole
             return SelectionItemsinfo;
 
         }
-        public List<WayPoints> AllWayPointsGetInfo()
+        public List<WayPoints> AllWayPointsGetInfo(int MapSelection)
         {
             string MapDefinition;
             MapDefinition = "1";
+            MapDefinition = MapSelection.ToString();
             string mystring = "" + (char)34;
             MapDefinition = MapDefinition.Replace(mystring, "");
             mystring = "" + (char)47;
             MapDefinition = MapDefinition.Replace(mystring, "");
             mystring = "" + (char)92;
             MapDefinition = MapDefinition.Replace(mystring, "");
-            MapDefinition = "1";
+            //MapDefinition = "1";
             List<WayPoints> SelectionItemsinfo = new List<WayPoints>();
             DataSet ds = new DataSet();
             int iMapDefinition = Convert.ToInt32(MapDefinition);

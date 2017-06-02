@@ -1,8 +1,15 @@
 ﻿function AddTiling(map)
 {
     try {
-        AddOverLayMap(map, 'http://qkss.com/HooknLine/TILES/TrinityBay/', 29.376639, -95.097300, 29.801420, -94.353477);
-        AddOverLayMap(map, 'http://qkss.com/HooknLine/TILES/WestBay/', 28.993955, -95.309236, 29.385521, -94.814655);
+        if (MapSelection == 1)
+            {
+            AddOverLayMap(map, 'http://qkss.com/HooknLine/TILES/TrinityBay/', 29.376639, -95.097300, 29.801420, -94.353477);
+            AddOverLayMap(map, 'http://qkss.com/HooknLine/TILES/WestBay/', 28.993955, -95.309236, 29.385521, -94.814655);
+        }
+        else 
+        {
+            AddOverLayMap(map, 'http://qkss.com/HooknLine/TILES/DickensonBay/', 29.407933, -94.96053, 29.504333, -94.875166);
+        }
     }
     catch(e)
     {        
@@ -13,8 +20,15 @@ function AddKML(map)
 {
     try {        
         if (KMLAdded == false)
-        {            
-        var kmlUrl = 'http://qkss.com/HooknLine/KML/JoeTrombleyChangesCircles20160215.kml';
+        {
+           //F103 - F104 - kml.kml
+            var kmlUrl = 'http://qkss.com/HooknLine/KML/JoeTrombleyChangesCircles20160215.kml';
+            
+            if (MapSelection == 2)
+            {
+                //alert('new KML');
+                kmlUrl = 'http://qkss.com/HooknLine/KML/DickensonBayForKMLV2.kml'; //DickensonBayAfterGoogleEarth.kml';
+            }
         LayerKML = new google.maps.KmlLayer({
             preserveViewport: true,
             url: kmlUrl,
@@ -160,7 +174,9 @@ function DisplayKMLPoint(evt)
 
                         infowindow.close();
                         infowindow = new google.maps.InfoWindow({
-                            content: StringforDisplay
+                            content: StringforDisplay,
+                            maxWidth: 750
+
                         });
                         myLatLng = { lat: LatP, lng: LngP };
                         marker.setPosition(myLatLng);
@@ -177,108 +193,4 @@ function DisplayKMLPoint(evt)
         ErrorFunction(e);
     }
 }
-function PickAPoint() {
-    try {
-        var Latitude = document.getElementById('LatitudeLabel').innerHTML;
-        var Longitude = document.getElementById('LongitudeLabel').innerHTML;
-        if ((Longitude == '') || (Latitude == '')) {
-            alert('Please select a point');
-            return
-        }
 
-        document.getElementById('map').style.display = "block";
-        initMap();
-        //document.getElementById("map").style.width = "100%"
-        //var evt = new google.maps.LatLng(Latitude, Longitude);
-        //var myLatlng = new google.maps.LatLng(map, evt.latLng.Latitude);
-        var Data;
-        var urlMain;
-        var sLatitude = Latitude;//evt.latLng.toString();
-        var sLongitude = Longitude;        
-        //alert(myLatlng.latitude);        
-        urlMain = '/WCFWebService.svc/SpecificWayPointGetInfo/';
-        Data = '?Latitude=' + sLatitude + '&Longitude=' + sLongitude;
-        //Data = '?Latitude="28"/Longitude="95"';        
-        urlMain = urlMain + Data;
-        jQuery.ajax({
-            type: 'GET',
-            contentType: 'application/json;  charset=utf-8',
-            url: urlMain,
-            dataType: 'json',
-            async: false,
-            success: function (Result) {
-                try {
-                    var test;
-                    var WayPointName;
-                    var TypeOfFishingP = "";
-                    var LatP;
-                    var LngP;
-                    var NameP;
-                    var FishP;
-                    var BestWindP;
-                    var TypeOfFishingP;
-                    var WayPointTypeID;
-                    var WayPointTypeName;
-                    WayPointName = Result[0].WayPointName;
-                    for (var i in Result) {
-                        //var serie = { WayPointID: Result[i].WayPointID, WayPointName: Result[i].WayPointName, Lat: Result[i].Latitude, Lng: Result[i].Longitude };
-                        TypeOfFishingP = Result[i].TypeOfFishingText;
-                        LatP = Result[i].Latitude;
-                        LngP = Result[i].Longitude;
-                        NameP = Result[i].WayPointName;
-                        FishP = Result[i].FishingText;
-                        BestWindP = Result[i].BestWindText;
-                        TypeOfFishingP = Result[i].TypeOfFishingText;
-                        WayPointTypeID = Result[i].WayPointTypeID;
-                        WayPointTypeName = Result[i].WayPointTypeName;
-                        break;
-                    }
-
-                    if ((LatP != 0) && (LngP != 0)) {
-                        var StringforDisplay = '';
-                        var CurrentDate = new Date();
-                        var StringforDisplay = "";
-                        StringforDisplay = '<style> #WeatherTable {font-size: large;} p {font-size: large; word-wrap: break-word}</style>';
-                        StringforDisplay = '';
-                        if (WayPointTypeID == 1)  // Normal Way Point
-                        {
-                            StringforDisplay = StringforDisplay + 'WayPoint:  ' + NameP;
-                            StringforDisplay = StringforDisplay + '<hr style="height:2px; visibility:hidden;" />';
-                            if (FishP != '') { StringforDisplay = StringforDisplay + 'Fish:  ' + FishP + '<hr style="height:2px; visibility:hidden;" />'; }
-
-                            if (BestWindP != '') { StringforDisplay = StringforDisplay + 'Best Wind Direction:  ' + BestWindP + '<hr style="height:2px; visibility:hidden;" />'; }
-                            if (TypeOfFishingP != '') { StringforDisplay = StringforDisplay + 'Type of Fishing:  ' + TypeOfFishingP + '<hr style="height:2px; visibility:hidden;" />'; }
-                        }
-                        else if (WayPointTypeID == 2) {  // WayPoint without underlying data                
-                            StringforDisplay = StringforDisplay + 'WayPoint:  ' + NameP;
-                            StringforDisplay = StringforDisplay + '<hr style="height:2px; visibility:hidden;" />';
-                        }
-                        else if (WayPointTypeID == 3) {  // Marina
-                            StringforDisplay = StringforDisplay + 'WayPoint:  ' + NameP;
-                            StringforDisplay = StringforDisplay + '<hr style="height:2px; visibility:hidden;" />';
-                            if (FishP != '') { StringforDisplay = StringforDisplay + 'Detail:  ' + FishP + '<hr style="height:2px; visibility:hidden;" />'; }
-                            if (BestWindP != '') { StringforDisplay = StringforDisplay + 'Best Wind Direction:  ' + BestWindP + '<hr style="height:2px; visibility:hidden;" />'; }
-
-                        }
-                        StringforDisplay = StringforDisplay + '<input type="submit" onClick="CloseInfoWindowAndMoveMarker();" value="Close">'
-
-                        infowindow.close();
-                        infowindow = new google.maps.InfoWindow({
-                            content: StringforDisplay
-                        });
-                        myLatLng = { lat: LatP, lng: LngP };
-                        marker.setPosition(myLatLng);
-                        infowindow.open(map, marker);
-                    }
-                }
-                catch (e) { alert(e); }
-            },
-            error: function (e) { alert("Error"); alert(e.responseText); }
-        });
-        
-    }
-    catch (e) {
-        ErrorFunction(e);
-    }
-
-}

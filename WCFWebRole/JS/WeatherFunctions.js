@@ -32,39 +32,56 @@
                 var CurrentDate = new Date();
                 var StringforDisplay = "";
                 //Establish Internal Look and Feel
-                StringforDisplay = '<style> #WeatherTable {font-size: large;} p {font-size: large;}</style>'
-                StringforDisplay = StringforDisplay + '<P><b>Real Time Conditions at Eagle Point as of <br /> (' + CurrentTime + ' ) <br />'
+                //StringforDisplay = '<style> #WeatherTable {font-size: large;} p {font-size: large;}</style>'
+                StringforDisplay = '<div class="infoWindowDiv">';
+                StringforDisplay = StringforDisplay + 'Real Time Conditions at Eagle Point <br /> as of (' + CurrentTime + ' ) <br />'
                 //            StringforDisplay = StringforDisplay + '<P>Scroll Down to See All of the Weather</P>'
-                StringforDisplay = StringforDisplay + '<br><input type="submit" onClick="CloseInfoWindowAndMoveMarker();" value="Close">'
-                StringforDisplay = StringforDisplay + '<table id="WeatherTable" border="1" style="overflow: auto;" >'
+                StringforDisplay = StringforDisplay + '</br><input type="submit" onClick="CloseInfoWindowAndMoveMarker();" value="Close"></br>'
+                //StringforDisplay = StringforDisplay + '<table id="WeatherTable" border="1" style="overflow: auto;" >'
                 // Obtain Forecast Time
-                StringforDisplay = StringforDisplay + '<table id="WeatherTable" border="1" style="overflow: auto;" >'
+                //StringforDisplay = StringforDisplay + '<br>Wind Direction (WDIR):       ' + ' (' + WindDir + ' deg true)';
+                //StringforDisplay = StringforDisplay + '<br>';
+                //StringforDisplay = StringforDisplay + 'Wind Speed (WSPD):           ' + WindSpeed + ' mph';
+                //StringforDisplay = StringforDisplay + '<br>'
+                //StringforDisplay = StringforDisplay + 'Atmospheric Pressure (PRES): ' + Pressure + ' mbs';
+                //StringforDisplay = StringforDisplay + '<br>';
+                //StringforDisplay = StringforDisplay + 'Air Temp (ATMP):             ' + CurrentTemp + ' F';
+                //StringforDisplay = StringforDisplay + '<br>';
+                //var CurrentWaterTemp = WaterTemp;
+                //StringforDisplay = StringforDisplay + 'Water Temperature (WTMP):    ' + WaterTemp + ' F';
+                //StringforDisplay = StringforDisplay + '<br>';
+                //StringforDisplay = StringforDisplay + '</div>';
+                StringforDisplay = StringforDisplay + '<table class="InfoTableBorder" id="WeatherTable" >'; //border="1" style="overflow: auto;" >'
                 StringforDisplay = StringforDisplay + '<tr>'
-                StringforDisplay = StringforDisplay + '<td>'
+                StringforDisplay = StringforDisplay + '<td class="InfoTableCellBorder">'
                 StringforDisplay = StringforDisplay + 'Wind Direction (WDIR)'
-                StringforDisplay = StringforDisplay + '</td><td>'
+                StringforDisplay = StringforDisplay + '</td><td class="InfoTableCellBorder">'
                 StringforDisplay = StringforDisplay + WindDesc + ' (' + WindDir + ' deg true)'
-                StringforDisplay = StringforDisplay + '</td></tr><tr><td>'
+                StringforDisplay = StringforDisplay + '</td></tr><tr><td class="InfoTableCellBorder">'
                 StringforDisplay = StringforDisplay + 'Wind Speed (WSPD)'
-                StringforDisplay = StringforDisplay + '</td><td>' + WindSpeed + ' mph</td></tr><tr><td>'
+                StringforDisplay = StringforDisplay + '</td><td class="InfoTableCellBorder">' + WindSpeed + ' mph</td></tr><tr><td  class="InfoTableCellBorder">'
                 StringforDisplay = StringforDisplay + 'Atmospheric Pressure (PRES)'
-                StringforDisplay = StringforDisplay + '</td><td>' + Pressure + ' mbs</td></tr><tr><td>'
-                StringforDisplay = StringforDisplay + 'Air Temp (ATMP)</td><td>'
-                StringforDisplay = StringforDisplay + CurrentTemp + ' F</td></tr><tr><td>'
-                StringforDisplay = StringforDisplay + 'Water Temperature (WTMP)</td><td>'
+                StringforDisplay = StringforDisplay + '</td><td class="InfoTableCellBorder">' + Pressure + ' mbs</td></tr><tr><td  class="InfoTableCellBorder">'
+                StringforDisplay = StringforDisplay + 'Air Temp (ATMP)</td><td class="InfoTableCellBorder">'
+                StringforDisplay = StringforDisplay + CurrentTemp + ' F</td></tr><tr><td  class="InfoTableCellBorder">'
+                StringforDisplay = StringforDisplay + 'Water Temperature (WTMP)</td><td class="InfoTableCellBorder">'
                 var CurrentWaterTemp = WaterTemp;
                 CurrentWaterTemp = CurrentWaterTemp - 5.0;
-                StringforDisplay = StringforDisplay + WaterTemp + ' F</td></tr><tr><td>'
+                StringforDisplay = StringforDisplay + WaterTemp + ' F</td></tr><tr><td  class="InfoTableCellBorder">'
                 StringforDisplay = StringforDisplay + '</tr></table>'
-                StringforDisplay = StringforDisplay + "</table>"                
+                StringforDisplay = StringforDisplay + "</table>"
+                StringforDisplay = StringforDisplay + "</div>"
                 infowindow.close();
                 
                 
                 infowindow = new google.maps.InfoWindow({
-                    content: StringforDisplay
+                    content: StringforDisplay,
+                    maxWidth: 750
                 });
-                
-                myLatLng = { lat: 29.481, lng: -94.917 };
+                //var Test = map.getCenter().lat();
+                //CurrentLat = map.getCenter().lat();
+                //CurrentLng = map.getCenter().lng();
+                myLatLng = { lat: CurrentLat, lng: CurrentLng };
                 marker.setPosition(myLatLng);
                 infowindow.open(map, marker);                
             },
@@ -77,7 +94,8 @@
 }
 function DisplayWeatherForecast()
 {
-    try{
+    try {
+        
         $.ajax({
             type: "GET",
             contentType: "application/json; charset=utf-8",
@@ -91,11 +109,12 @@ function DisplayWeatherForecast()
             success: function (Result) {
                 var StringforDisplay = "";
                 var WeatherDesc = '';
+
                 for (var i in Result) {                    
-                    StringforDisplay = '<style> #WeatherTable {font-size: large;} p {font-size: large;}</style>'
-                    StringforDisplay = StringforDisplay + '<P><b>Forecast Conditions at Eagle Point as of <br /> (' + Result[i].DateOfForecast.toString() + ' ) <br />'
-                    StringforDisplay = StringforDisplay + '<br><input type="submit" onClick="CloseInfoWindowAndMoveMarker();" value="Close">'
-                    StringforDisplay = StringforDisplay + '<table id="WeatherTable" border="1" style="overflow: auto;" >'
+                    StringforDisplay = '<div class="infoWindowDiv">'
+                    StringforDisplay = StringforDisplay + 'Forecast Conditions at Eagle Point as of <br /> (' + Result[i].DateOfForecast.toString() + ' ) <br />'
+                    StringforDisplay = StringforDisplay + '</br><input type="submit" onClick="CloseInfoWindowAndMoveMarker();" value="Close">'
+                    StringforDisplay = StringforDisplay + '</br><table class="InfoTable" id="WeatherTable" border="1" style="overflow: auto;" >'
 
                 }
                 for (var i in Result) {
@@ -103,9 +122,9 @@ function DisplayWeatherForecast()
                     //Obtain Temperature
                     var ForecastedTemp = Result[i].ForecastTemp;
                     // Obtain Forecast Description
-                    var ForecastedDesc = Result[i].ForecastStatus
+                    var ForecastedDesc = Result[i].ForecastStatus;
                     // Table Header
-                    StringforDisplay = StringforDisplay + "<tr><td>"
+                    StringforDisplay = StringforDisplay + '<tr><td class="InfoTableCell">';
                     WeatherDesc = ForecastedDesc.toString();
                     if (WeatherDesc.length > 5)
                     {
@@ -115,13 +134,16 @@ function DisplayWeatherForecast()
                     StringforDisplay = StringforDisplay + ForecastedTemp + 'F' + ' at ' + Result[i].ForecastDate.toString() + WeatherDesc;
                     StringforDisplay = StringforDisplay + "</td></tf>"
                 }
-                StringforDisplay = StringforDisplay + "</table>"
-
+                StringforDisplay = StringforDisplay + "</table></div>"
+                
                 infowindow.close();
                 infowindow = new google.maps.InfoWindow({
-                    content: StringforDisplay
+                    content: StringforDisplay,
+                    maxWidth: 750
                 });
-                myLatLng = { lat: 29.481, lng: -94.917 };
+                //CurrentLat = map.getCenter().lat();
+                //CurrentLng = map.getCenter().lng();
+                myLatLng = { lat: CurrentLat, lng: CurrentLng };
                 marker.setPosition(myLatLng);
                 infowindow.open(map, marker);
             },
