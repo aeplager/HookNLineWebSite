@@ -3,12 +3,17 @@
     try {
         if (MapSelection == 1)
             {
-            AddOverLayMap(map, 'http://qkss.com/HooknLine/TILES/TrinityBay/', 29.376639, -95.097300, 29.801420, -94.353477);
-            AddOverLayMap(map, 'http://qkss.com/HooknLine/TILES/WestBay/', 28.993955, -95.309236, 29.385521, -94.814655);
+            AddOverLayMap(map, 'https://qkss.com/HooknLine/TILES/TrinityBay/', 29.376639, -95.097300, 29.801420, -94.353477);
+            AddOverLayMap(map, 'https://qkss.com/HooknLine/TILES/WestBay/', 28.993955, -95.309236, 29.385521, -94.814655);
+        }
+        else if (MapSelection==3)
+        {
+            // Test Subject
+            AddOverLayMap(map, 'https://qkss.com/HooknLine/TILES/TestMap/', 29.407933, -94.96053, 29.504333, -94.875166);
         }
         else 
         {
-            AddOverLayMap(map, 'http://qkss.com/HooknLine/TILES/DickensonBay/', 29.407933, -94.96053, 29.504333, -94.875166);
+            AddOverLayMap(map, 'https://qkss.com/HooknLine/TILES/DickensonBay/', 29.407933, -94.96053, 29.504333, -94.875166);
         }
     }
     catch(e)
@@ -22,12 +27,12 @@ function AddKML(map)
         if (KMLAdded == false)
         {
            //F103 - F104 - kml.kml
-            var kmlUrl = 'http://qkss.com/HooknLine/KML/JoeTrombleyChangesCircles20160215.kml';
+            var kmlUrl = 'https://qkss.com/HooknLine/KML/JoeTrombleyChangesCircles20160215.kml';
             
             if (MapSelection == 2)
             {
                 //alert('new KML');
-                kmlUrl = 'http://qkss.com/HooknLine/KML/DickensonBayForKMLV2.kml'; //DickensonBayAfterGoogleEarth.kml';
+                kmlUrl = 'https://qkss.com/HooknLine/KML/DickensonBayForKMLV2.kml'; //DickensonBayAfterGoogleEarth.kml';
             }
         LayerKML = new google.maps.KmlLayer({
             preserveViewport: true,
@@ -35,7 +40,7 @@ function AddKML(map)
             suppressInfoWindows: true,
             preserveViewport: true
         });
-        LayerKML.setMap(map);
+        1
         google.maps.event.addListener(LayerKML, 'click', function (evt) {
             //google.maps.event.addListener(ctaLayer, 'dblclick', function (evt) {                
             DisplayKMLPoint(evt, 1);
@@ -108,7 +113,8 @@ function DisplayKMLPoint(evt)
         //alert(myLatlng.latitude);
         
         urlMain = '/WCFWebService.svc/SpecificWayPointGetInfo/';
-        Data = '?Latitude=' + sLatitude + '&Longitude=' + sLongitude;
+        Data = '?Latitude=' + sLatitude + '&Longitude=' + sLongitude + '&MapDefinition=' + MapSelection;
+        //alert('?Latitude=' + sLatitude + '&Longitude=' + sLongitude);
         //Data = '?Latitude="28"/Longitude="95"';        
         urlMain = urlMain + Data;
         jQuery.ajax({
@@ -138,7 +144,8 @@ function DisplayKMLPoint(evt)
                         LngP = Result[i].Longitude;
                         NameP = Result[i].WayPointName;
                         FishP = Result[i].FishingText;                        
-                        BestWindP = Result[i].BestWindText;                        TypeOfFishingP = Result[i].TypeOfFishingText;
+                        BestWindP = Result[i].BestWindText;
+                        TypeOfFishingP = Result[i].TypeOfFishingText;
                         WayPointTypeID = Result[i].WayPointTypeID;
                         WayPointTypeName = Result[i].WayPointTypeName;                        
                         break;
@@ -149,21 +156,24 @@ function DisplayKMLPoint(evt)
                         var CurrentDate = new Date();
                         var StringforDisplay = "";                        
                         StringforDisplay = '<style> #WeatherTable {font-size: "2";} p {font-size: "2"; word-wrap: break-word}</style>';
-                        StringforDisplay = '';
+                        StringforDisplay = '<div id="content">';
+                        //alert('Position 1');
                         if (WayPointTypeID == 1)  // Normal Way Point
                         {
                             StringforDisplay = StringforDisplay + '<font size="2">WayPoint:  ' + NameP + '</font>';
                             StringforDisplay = StringforDisplay + '<hr style="height:2px; visibility:hidden;" />';
+                            //alert('Position 2.1');
+                          //  alert(FishP);
+                            //StringforDisplay = StringforDisplay + 'Current Zoom:  ' + map.getZoom();
                             if (FishP != '') { StringforDisplay = StringforDisplay + 'Fish:  ' + FishP + '<hr style="height:2px; visibility:hidden;" />'; }
-
                             if (BestWindP != '') { StringforDisplay = StringforDisplay + 'Best Wind Direction:  ' + BestWindP + '<hr style="height:2px; visibility:hidden;" />'; }
                             if (TypeOfFishingP != '') { StringforDisplay = StringforDisplay + 'Type of Fishing:  ' + TypeOfFishingP + '<hr style="height:2px; visibility:hidden;" />'; }
                         }
-                        else if (WayPointTypeID == 2) {  // WayPoint without underlying data                
+                        else if (WayPointTypeID == 2) {  // WayPoint without underlying data                                            
                             StringforDisplay = StringforDisplay + '<font size="2">WayPoint:  ' + NameP + '</font>';
                             StringforDisplay = StringforDisplay + '<hr style="height:2px; visibility:hidden;" />';
                         }
-                        else if (WayPointTypeID == 3) {  // Marina
+                        else if (WayPointTypeID == 3) {  // Marina                            
                             StringforDisplay = StringforDisplay + '<font size="2">WayPoint:  ' + NameP + '</font>';
                             StringforDisplay = StringforDisplay + '<hr style="height:2px; visibility:hidden;" />';
                             if (FishP != '') { StringforDisplay = StringforDisplay + 'Detail:  ' + FishP + '<hr style="height:2px; visibility:hidden;" />'; }
@@ -171,11 +181,12 @@ function DisplayKMLPoint(evt)
                             
                         }
                         StringforDisplay = StringforDisplay + '<input type="submit" onClick="CloseInfoWindowAndMoveMarker();" value="Close">'
-
+                        StringforDisplay = StringforDisplay + '</div>'
                         infowindow.close();
                         infowindow = new google.maps.InfoWindow({
-                            content: StringforDisplay,
-                            maxWidth: 750
+                            content: StringforDisplay
+                            //,
+                            //maxWidth: 200
 
                         });
                         myLatLng = { lat: LatP, lng: LngP };

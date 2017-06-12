@@ -19,7 +19,7 @@ namespace WCFWebRole
     {
 
 
-        public List<WayPoints> SpecificWayPointGetInfo(double Latitude, double Longitude)
+        public List<WayPoints> SpecificWayPointGetInfo(double Latitude, double Longitude, int MapDefinition)
         {
 
             List<WayPoints> SelectionItemsinfo = new List<WayPoints>();
@@ -32,17 +32,18 @@ namespace WCFWebRole
                     //string SqlCommandText = "[WebSite].[SpecificWayPointsGetInfo]";
                     string SqlCommandText = "SELECT	TOP 1 [WayPointsID], [WayPointName], [Latitude], [Longitude], [FishingText], [BestWindText], [TypeOfFishingText]";
                     //SqlCommandText = SqlCommandText + ",geography::STGeomFromText('POINT(-94.9328333326 29.5049999747)', 4326).STDistance([GeoLocation])  as Distance";
-                    SqlCommandText = SqlCommandText + ",WT.[WayPointTypeID],[WayPointTypeName]";
-                    SqlCommandText = SqlCommandText + ",geography::STGeomFromText('POINT(" + Latitude + " " + Longitude + ")', 4326).STDistance([GeoLocation])  as Distance";
-                    SqlCommandText = SqlCommandText + " FROM	[WebSite].[WayPoints] W";
-                    SqlCommandText = SqlCommandText + " INNER JOIN WebSite.WayPointType WT ON W.[WayPointTypeID] = WT.[WayPointTypeID]";
-                    SqlCommandText = SqlCommandText + " ORDER BY geography::STGeomFromText('POINT(" + Latitude + " " + Longitude + ")', 4326).STDistance([GeoLocation])";
+                    //SqlCommandText = SqlCommandText + ",WT.[WayPointTypeID],[WayPointTypeName]";
+                    //SqlCommandText = SqlCommandText + ",geography::STGeomFromText('POINT(" + Latitude + " " + Longitude + ")', 4326).STDistance([GeoLocation])  as Distance";
+                    //SqlCommandText = SqlCommandText + " FROM	[WebSite].[WayPoints] W";
+                    //SqlCommandText = SqlCommandText + " INNER JOIN WebSite.WayPointType WT ON W.[WayPointTypeID] = WT.[WayPointTypeID]";
+                    //SqlCommandText = SqlCommandText + " ORDER BY geography::STGeomFromText('POINT(" + Latitude + " " + Longitude + ")', 4326).STDistance([GeoLocation])";
                     //SqlCommandText = SqlCommandText + " ORDER BY geography::STGeomFromText('POINT(-94.9328333326 29.5049999747)', 4326).STDistance([GeoLocation])";
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.CommandText = "[WebSite].[SpecificWayPointGetInfo]";
                     cmd.Connection = con;
                     cmd.Parameters.AddWithValue("@Lat", Latitude);
                     cmd.Parameters.AddWithValue("@Lng", Longitude);
+                    cmd.Parameters.AddWithValue("@MapDefinition", MapDefinition);
                     using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                     {
                         da.Fill(ds, "SelectionItems");

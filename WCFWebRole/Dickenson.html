@@ -45,7 +45,7 @@
                     });
                     infoWindow = new google.maps.InfoWindow({
                         map: map,
-                        maxWidth: 750
+                        maxWidth: 200
                     });
 
                     myLatLng = { lat: BaseLatMarker, lng: BaseLngMarker };
@@ -54,7 +54,7 @@
                     contentString = '<div class="infoWindowDiv"></div>';
                     infowindow = new google.maps.InfoWindow({
                         content: contentString,
-                        maxWidth: 750
+                        maxWidth: 200
                     });
 
                     //alert("TEST 2");
@@ -206,7 +206,7 @@
                         var sLongitude = Longitude;
                         //alert(myLatlng.latitude);
                         urlMain = '/WCFWebService.svc/SpecificWayPointGetInfo/';
-                        Data = '?Latitude=' + sLatitude + '&Longitude=' + sLongitude;
+                        Data = '?Latitude=' + sLatitude + '&Longitude=' + sLongitude + '&MapDefinition=' + MapSelection;
                         //Data = '?Latitude="28"/Longitude="95"';
                         urlMain = urlMain + Data;
                         jQuery.ajax({
@@ -247,7 +247,7 @@
                                         var StringforDisplay = '';
                                         var CurrentDate = new Date();
                                         var StringforDisplay = "";
-                                        StringforDisplay = '<div class="infoWindowDiv">';
+                                        StringforDisplay = '<div id="content"><div class="infoWindowDiv">';
                                         //StringforDisplay = '<style> #WeatherTable {font-size: large;} p {font-size: large; word-wrap: break-word}</style>';
 
                                         if (WayPointTypeID == 1)  // Normal Way Point
@@ -271,11 +271,12 @@
 
                                         }
                                         StringforDisplay = StringforDisplay + '</br><input type="submit" onClick="CloseInfoWindowAndMoveMarker();" value="Close">'
-                                        StringforDisplay = StringforDisplay + '</div>';
+                                        StringforDisplay = StringforDisplay + '</div></div>';
                                         infowindow.close();
                                         infowindow = new google.maps.InfoWindow({
-                                            content: StringforDisplay,
-                                            maxWidth: 750
+                                            content: StringforDisplay
+                                            //,
+                                            //maxWidth: 200
                                         });
                                         myLatLng = { lat: LatP, lng: LngP };
                                         marker.setPosition(myLatLng);

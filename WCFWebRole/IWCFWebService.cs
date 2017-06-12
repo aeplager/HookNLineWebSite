@@ -31,11 +31,11 @@ namespace WCFWebRole
             BodyStyle = WebMessageBodyStyle.Bare)]
         List<Players> GetPlayersJsonParam(string userid, string password);
 
-        [WebGet(UriTemplate = "/SpecificWayPointGetInfo/?Latitude={Latitude}&Longitude={Longitude}",
+        [WebGet(UriTemplate = "/SpecificWayPointGetInfo/?Latitude={Latitude}&Longitude={Longitude}&MapDefinition={MapDefinition}",
            RequestFormat = WebMessageFormat.Json,
            ResponseFormat = WebMessageFormat.Json,
            BodyStyle = WebMessageBodyStyle.Bare)]
-        List<WayPoints> SpecificWayPointGetInfo(double Latitude, double Longitude);
+        List<WayPoints> SpecificWayPointGetInfo(double Latitude, double Longitude, int MapDefinition);
 
         [WebGet(UriTemplate = "/RealTimeWeatherGetInfo",
             RequestFormat = WebMessageFormat.Json,

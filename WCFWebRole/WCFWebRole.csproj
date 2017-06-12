@@ -159,8 +159,10 @@
     <Content Include="bin\zh-Hant\System.Spatial.resources.dll" />
     <Content Include="CSS\MappingPage.css" />
     <Content Include="CSS\style.css" />
+    <Content Include="MappingPageV2.html" />
+    <Content Include="TryOfResubmitted.html" />
+    <Content Include="TestingGoogleMaps.html" />
     <Content Include="googlemaps.html" />
-    <Content Include="leaflet.html" />
     <Content Include="TEST-Main.html" />
     <Content Include="HookNLinePasswordReset.html" />
     <Content Include="images\gpsloc.png" />
@@ -176,6 +178,7 @@
     <Content Include="Dickenson.html" />
     <Content Include="MappingPage.html" />
     <Content Include="Test.html" />
+    <Content Include="Test2.html" />
     <Content Include="TestPage.html" />
     <Content Include="WCFAjax.svc" />
     <Content Include="WCFWebService.svc" />

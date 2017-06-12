@@ -1,6 +1,6 @@
 ﻿<html>
 <ead>
-    <title>Dickenson Map</title>
+    <title>Trial Map</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
     <!--<meta name="viewport" content="initial-scale=1.0">-->
     <meta charset="utf-8">
@@ -19,11 +19,11 @@
     <script type="text/javascript" src="js/Points-autocomplete.js"></script>
     <link rel="stylesheet" type="text/css" href="CSS/style.css" />
 
-    
-        <head>
-            <!--Autocomplete-->
-            <!--Autocomplete-->
-            <script>
+
+    <head>
+        <!--Autocomplete-->
+        <!--Autocomplete-->
+        <script>
                 var map;
                 var marker;
                 var CurrentMarker;
@@ -36,7 +36,7 @@
                 var CurrentLat =  29.452833;
                 var CurrentLng = -94.914500;
                 var MainMapTypeId = 'satellite'
-                var MapSelection = 2;
+                var MapSelection = 3;
                 function initMap() {
                     var map = new google.maps.Map(document.getElementById('map'), {
                         center: { lat: CurrentLat, lng: CurrentLng },
@@ -230,7 +230,7 @@
                                     var WayPointTypeName;
                                     WayPointName = Result[0].WayPointName;
                                     for (var i in Result) {
-                                        
+
                                         TypeOfFishingP = Result[i].TypeOfFishingText;
                                         LatP = Result[i].Latitude;
                                         LngP = Result[i].Longitude;
@@ -247,7 +247,7 @@
                                         var StringforDisplay = '';
                                         var CurrentDate = new Date();
                                         var StringforDisplay = "";
-                                        StringforDisplay = '<div class="infoWindowDiv">';
+                                        StringforDisplay = '<div id="content"><div class="infoWindowDiv">';
                                         //StringforDisplay = '<style> #WeatherTable {font-size: large;} p {font-size: large; word-wrap: break-word}</style>';
 
                                         if (WayPointTypeID == 1)  // Normal Way Point
@@ -271,7 +271,7 @@
 
                                         }
                                         StringforDisplay = StringforDisplay + '</br><input type="submit" onClick="CloseInfoWindowAndMoveMarker();" value="Close">'
-                                        StringforDisplay = StringforDisplay + '</div>';
+                                        StringforDisplay = StringforDisplay + '</div></div>';
                                         infowindow.close();
                                         infowindow = new google.maps.InfoWindow({
                                             content: StringforDisplay,
@@ -454,9 +454,9 @@
                     document.getElementById('map').style.display = "block";
                     initMap();
                 }
-            </script>
-         
-        </head>
+        </script>
+
+    </head>
     <body onload="init()">
         <div id="LoginPage" hidden="true">
             <img src="images/HookNLineLogo.png" />

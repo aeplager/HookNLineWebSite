@@ -82,7 +82,6 @@
     });
     controlUL.appendChild(controlLI2);
 
-
     var controlLI70 = document.createElement('LI');
     controlLI70.id = "LM";
     controlLI70.innerHTML = "Locate Me";
@@ -113,6 +112,78 @@
         }
     });
     controlUL.appendChild(controlLI70);
+
+
+    var controlLITest = document.createElement('LI');
+    controlLITest.innerHTML = "Switch Maps";
+    controlLITest.id = "WF";
+    controlLITest.className = "LIClass";
+    controlLITest.addEventListener('click', function () {
+        // Switch to Dickenson
+        // Remove the layers
+        map.overlayMapTypes.clear();
+        LayerKML.setMap(null);
+        KMLAdded = false;
+        if (MapSelection == 1)
+            {
+            MapSelection = 2;
+        }
+        else
+        {
+            MapSelection = 1;
+        }
+        AddTiling(map);
+        AddKML(map);
+        // Clear and reset the pick a point logic
+        var urlMain = '/WCFWebService.svc/AllWayPointsGetInfo';
+        Data = '?MapSelection=' + MapSelection;
+        //    Data = '?MapDefinition=' = '"' + MapSelection + '"';
+        urlMain = urlMain + Data;
+        var currencies = [];
+
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            // Change Here To Change The Web Service Needed
+            //url: "/AzureHooknLineAjax.svc/HelloWorld",
+            url: urlMain,
+            // Change Here To Change The Parameters Needed
+            // data: "{}",
+            dataType: "json",
+            async: false,
+            success: function (Result) {
+
+                for (var i in Result) {
+                    var WayPointName = Result[i].WayPointName;
+                    var WayPointValue = {
+                        value: Result[i].WayPointName,
+                        Latitude: Result[i].Latitude,
+                        Longitude: Result[i].Longitude,
+                        WayPointID: Result[i].WayPointID
+                    };
+                    currencies.push(WayPointValue);
+                }
+                // setup autocomplete function pulling from currencies[] array
+                $('#autocomplete').autocomplete({
+                    lookup: currencies,
+                    onSelect: function (suggestion) {
+                        //var thehtml = '<strong>Point:</strong> ' + suggestion.value + ' <br> <strong>Symbol:</strong> ' + suggestion.Latitude;                    
+                        document.getElementById('WayPointLabel').innerHTML = suggestion.value;
+                        document.getElementById('LatitudeLabel').innerHTML = suggestion.Latitude;
+                        document.getElementById('LongitudeLabel').innerHTML = suggestion.Longitude;
+                        var thehtml = '<strong>Point:</strong> ' + suggestion.value + ' <br> <strong>Symbol:</strong> ' + suggestion.Latitude;
+                        $('#outputcontent').html(thehtml);
+                    }
+                });
+            },
+            error: function (Result) {
+                alert("Error");
+            }
+        });
+
+    });
+    controlUL.appendChild(controlLITest);
+
 
     //var controlLI80 = document.createElement('LI');
     //controlLI80.innerHTML = "Get Center 2";

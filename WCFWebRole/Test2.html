@@ -19,11 +19,11 @@
     <script type="text/javascript" src="js/Points-autocomplete.js"></script>
     <link rel="stylesheet" type="text/css" href="CSS/style.css" />
 
-    
-        <head>
-            <!--Autocomplete-->
-            <!--Autocomplete-->
-            <script>
+
+    <head>
+        <!--Autocomplete-->
+        <!--Autocomplete-->
+        <script>
                 var map;
                 var marker;
                 var CurrentMarker;
@@ -36,7 +36,7 @@
                 var CurrentLat =  29.452833;
                 var CurrentLng = -94.914500;
                 var MainMapTypeId = 'satellite'
-                var MapSelection = 2;
+                var MapSelection = 3;
                 function initMap() {
                     var map = new google.maps.Map(document.getElementById('map'), {
                         center: { lat: CurrentLat, lng: CurrentLng },
@@ -230,7 +230,7 @@
                                     var WayPointTypeName;
                                     WayPointName = Result[0].WayPointName;
                                     for (var i in Result) {
-                                        
+
                                         TypeOfFishingP = Result[i].TypeOfFishingText;
                                         LatP = Result[i].Latitude;
                                         LngP = Result[i].Longitude;
@@ -454,9 +454,9 @@
                     document.getElementById('map').style.display = "block";
                     initMap();
                 }
-            </script>
-         
-        </head>
+        </script>
+
+    </head>
     <body onload="init()">
         <div id="LoginPage" hidden="true">
             <img src="images/HookNLineLogo.png" />

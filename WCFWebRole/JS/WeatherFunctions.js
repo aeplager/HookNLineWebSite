@@ -76,7 +76,7 @@
                 
                 infowindow = new google.maps.InfoWindow({
                     content: StringforDisplay,
-                    maxWidth: 750
+                    maxWidth: 200
                 });
                 //var Test = map.getCenter().lat();
                 //CurrentLat = map.getCenter().lat();
@@ -139,7 +139,7 @@ function DisplayWeatherForecast()
                 infowindow.close();
                 infowindow = new google.maps.InfoWindow({
                     content: StringforDisplay,
-                    maxWidth: 750
+                    maxWidth: 200
                 });
                 //CurrentLat = map.getCenter().lat();
                 //CurrentLng = map.getCenter().lng();
