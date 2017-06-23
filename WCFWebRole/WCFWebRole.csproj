@@ -159,7 +159,9 @@
     <Content Include="bin\zh-Hant\System.Spatial.resources.dll" />
     <Content Include="CSS\MappingPage.css" />
     <Content Include="CSS\style.css" />
-    <Content Include="MappingPageV2.html" />
+    <Content Include="JS\NavigationControls - 20170616.js" />
+    <Content Include="JS\TiledImageFiles - 20170616.js" />
+    <Content Include="MappingPage - 20170616.html" />
     <Content Include="TryOfResubmitted.html" />
     <Content Include="TestingGoogleMaps.html" />
     <Content Include="googlemaps.html" />

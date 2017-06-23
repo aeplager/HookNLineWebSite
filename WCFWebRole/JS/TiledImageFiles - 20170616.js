@@ -4,13 +4,12 @@
         if (MapSelection == 1)
             {
             AddOverLayMap(map, 'https://qkss.com/HooknLine/TILES/TrinityBay/', 29.376639, -95.097300, 29.801420, -94.353477);
-            AddOverLayMap(map, 'https://qkss.com/HooknLine/TILES/WestBay/', 28.993955, -95.309236, 29.385521, -94.814655);            
+            AddOverLayMap(map, 'https://qkss.com/HooknLine/TILES/WestBay/', 28.993955, -95.309236, 29.385521, -94.814655);
         }
-        else if (MapSelection==5)
+        else if (MapSelection==3)
         {
             // Test Subject
-            AddOverLayMap(map, 'https://qkss.com/HooknLine/TILES/TrinityBay/', 29.376639, -95.097300, 29.801420, -94.353477);
-            AddOverLayMap(map, 'https://qkss.com/HooknLine/TILES/WestBay/', 28.993955, -95.309236, 29.385521, -94.814655);
+            AddOverLayMap(map, 'https://qkss.com/HooknLine/TILES/TestMap/', 29.407933, -94.96053, 29.504333, -94.875166);
         }
         else 
         {
@@ -35,17 +34,15 @@ function AddKML(map)
                 //alert('new KML');
                 kmlUrl = 'https://qkss.com/HooknLine/KML/DickensonBayForKMLV2.kml'; //DickensonBayAfterGoogleEarth.kml';
             }
-            else if (MapSelection == 5)
-            {
-                kmlUrl = 'https://qkss.com/HooknLine/KML/F103-F104-kml.kml'; //DickensonBayAfterGoogleEarth.kml';
-            }
+           // kmlUrl = 'https://qkss.com/HooknLine/KML/JoeTrombleyChangesCircles20160215.kml';
         LayerKML = new google.maps.KmlLayer({
             preserveViewport: true,
             url: kmlUrl,
             suppressInfoWindows: true,
             preserveViewport: true
         });
-        LayerKML.setMap(map);
+            //1
+
         google.maps.event.addListener(LayerKML, 'click', function (evt) {
             //google.maps.event.addListener(ctaLayer, 'dblclick', function (evt) {                
             DisplayKMLPoint(evt, 1);
@@ -94,7 +91,7 @@ function AddOverLayMap(map, URL,lat1, lng1, lat2, Lng2)
             opacity: 1.0
         });
         map.overlayMapTypes.insertAt(0, maptilerTrinityBay);
-        map.setCenter(new google.maps.LatLng(lat2, Lng2));
+
 }
     catch(e)
 {        

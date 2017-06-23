@@ -13,7 +13,8 @@
     color:   black;   
 }
 .LIClass{
-    color:   magenta;      
+    color:   white; /*magenta;*/  
+    font-style:  italic;    
     background-color: transparent;
     font-weight:  bold;
     font-size:  medium; 
@@ -95,3 +96,4 @@
     font-size:  small;
     max-width: 750px; 
 }
+

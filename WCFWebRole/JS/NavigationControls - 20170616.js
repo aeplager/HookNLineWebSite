@@ -77,16 +77,10 @@
         //$("#map").hide();
         //document.getElementById("map").style.width = "0%"
         $('#autocomplete').val('');
-        ResetPointSelector();
-
-
         //document.getElementsById("autocomplete").value = "";
 
     });
     controlUL.appendChild(controlLI2);
-
-
-
 
     var controlLI70 = document.createElement('LI');
     controlLI70.id = "LM";
@@ -119,42 +113,94 @@
     });
     controlUL.appendChild(controlLI70);
 
+
     var controlLITest = document.createElement('LI');
     controlLITest.innerHTML = "Switch Maps";
     controlLITest.id = "WF";
     controlLITest.className = "LIClass";
     controlLITest.addEventListener('click', function () {
-        // Change the map Image
-        //KMLAdded == false;
-        //MapSelection = $('#MapSelectorComboBox').val();
+        // Switch to Dickenson
+        // Remove the layers
+        
+  
+        // Clear and reset the pick a point logic
+        var urlMain = '/WCFWebService.svc/AllWayPointsGetInfo';
+        Data = '?MapSelection=' + MapSelection;
+        //    Data = '?MapDefinition=' = '"' + MapSelection + '"';
+        urlMain = urlMain + Data;
+        var currencies = [];
+
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            // Change Here To Change The Web Service Needed
+            //url: "/AzureHooknLineAjax.svc/HelloWorld",
+            url: urlMain,
+            // Change Here To Change The Parameters Needed
+            // data: "{}",
+            dataType: "json",
+            async: false,
+            success: function (Result) {
+
+                for (var i in Result) {
+                    var WayPointName = Result[i].WayPointName;
+                    var WayPointValue = {
+                        value: Result[i].WayPointName,
+                        Latitude: Result[i].Latitude,
+                        Longitude: Result[i].Longitude,
+                        WayPointID: Result[i].WayPointID
+                    };
+                    currencies.push(WayPointValue);
+                }
+                // setup autocomplete function pulling from currencies[] array
+                $('#autocomplete').autocomplete({
+                    lookup: currencies,
+                    onSelect: function (suggestion) {
+                        //var thehtml = '<strong>Point:</strong> ' + suggestion.value + ' <br> <strong>Symbol:</strong> ' + suggestion.Latitude;                    
+                        document.getElementById('WayPointLabel').innerHTML = suggestion.value;
+                        document.getElementById('LatitudeLabel').innerHTML = suggestion.Latitude;
+                        document.getElementById('LongitudeLabel').innerHTML = suggestion.Longitude;
+                        var thehtml = '<strong>Point:</strong> ' + suggestion.value + ' <br> <strong>Symbol:</strong> ' + suggestion.Latitude;
+                        $('#outputcontent').html(thehtml);
+                    }
+                });
+            },
+            error: function (Result) {
+                alert("Error");
+            }
+        });
+        map.overlayMapTypes.clear();
+        LayerKML.setMap(null);
+        KMLAdded = false;
+        if (MapSelection == 1) {
+            MapSelection = 2;
+        }
+        else {
+            MapSelection = 1;
+        }
+        //AddTiling(map);
         //AddKML(map);
-        $("#LoginPage").hide();
-        $("#SearchScreen").hide();
-        $("#map").hide();
-        $('#MapSelection').show();
-        //var MapColorDetector = map.getMapTypeId();
-        //if (MapColorDetector == 'terrain') {
+        initMap();
+        //AddKML(map);
+        var MapColorDetector = map.getMapTypeId();
+        if (MapColorDetector == 'terrain') {
 
-        //    $(".LIClassBlack").css("color", "black");
-        //    $(".LIClass").css("color", "black");
-        //}
-        //else if (MapColorDetector == 'roadmap') {
-        //    $(".LIClassBlack").css("color", "black");
-        //    $(".LIClass").css("color", "black");
-        //}
-        //else {
-        //    $(".LIClassBlack").css("color", "white");
-        //    $(".LIClass").css("color", "white");
-        //}
-
-        map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
+            $(".LIClassBlack").css("color", "black");
+            $(".LIClass").css("color", "black");
+        }
+        else if (MapColorDetector == 'roadmap') {
+            $(".LIClassBlack").css("color", "black");
+            $(".LIClass").css("color", "black");
+        }
+        else {
+            $(".LIClassBlack").css("color", "white");
+            $(".LIClass").css("color", "white");
+        }
 
     });
     controlUL.appendChild(controlLITest);
 
-
-    controlUI.appendChild(controlUL);    
-    
+    controlUI.appendChild(controlUL);        
 
 }
 function CloseInfoWindowAndMoveMarker()
@@ -183,7 +229,7 @@ function DisplayMap()
 function LoginMain()
 {    
     try {
-        //document.body.style.zoom = 1.0;
+        //document.body.style.zoom = 1.0;        
         urlMain = '/WCFWebService.svc/LoginValidation/';
         var UserName = $("#UserNameEntry").val();
         var Password = $("#PassWrdEntry").val();
@@ -201,10 +247,11 @@ function LoginMain()
                         {
                     $("#LoginPage").hide();
                     $("#SearchScreen").hide();
+                    // Code to putting on 06/13/2017
                     $("#map").hide();
-                    $('#MapSelection').show();
-                    //document.getElementById('map').style.display = "block";
-                    //initMap();
+                    $("#MapSelection").show();
+                    // Clear and Readd all of the maps
+                    ClearAndReAdd();
                     }
                     else
                     {
@@ -315,82 +362,37 @@ function SubmitPassword() {
     }
 }
 
-function ObtainSelectedMap() {
+function ClearAndReAdd()
+{
     try {
-        // Sends you to the correct map        
-        MapSelection = $('#MapSelectorComboBox').val();
+        // Simply clears and re-adds the combo box with the appropriate purchased maps
+        $('#MapSelectorComboBox').empty();        
+        $('#MapSelectorComboBox').append('<option value="1">F-102 A Galveston Bay</option>');
+        $('#MapSelectorComboBox').append('<option value="2">F-102 D Dickinson Bay</option>');
+        $('#MapSelectorComboBox').append('<option value="3">F-103 A Galveston Bay Wade & Kayak Fishing</option>');
+    }
+    catch (e) {
+        errorReport(e);
+    }
+}
+function ObtainSelectedMap()
+{
+    try {
+        // Sends you to the correct map
+        //MapSelection = $('#MapSelectorComboBox').val();
         //MapSelection = 1;
         $("#LoginPage").hide();
         $("#SearchScreen").hide();
-        $("#MapSelection").hide();
-        
-        document.getElementById('map').style.display = "block";
-        initMap();
+        $("#MapSelection").hide();        
         $("#map").show();
-        //initMap();
-        // Change the Pick A Point List
-        ResetPointSelector();        
-        // Reset the Zoom Level
+        initMap();
 
+        
+
+        //alert(MapSelection);
     }
     catch (e) {
         errorReport(e);
     }
-
-}
-function ResetPointSelector()
-{
-    try{
-        var urlMain = '/WCFWebService.svc/AllWayPointsGetInfo';
-        Data = '?MapSelection=' + MapSelection;
-        //    Data = '?MapDefinition=' = '"' + MapSelection + '"';
-        urlMain = urlMain + Data;
-        var currencies = [];
-
-        $.ajax({
-            type: "GET",
-            contentType: "application/json; charset=utf-8",
-            // Change Here To Change The Web Service Needed
-            //url: "/AzureHooknLineAjax.svc/HelloWorld",
-            url: urlMain,
-            // Change Here To Change The Parameters Needed
-            // data: "{}",
-            dataType: "json",
-            async: false,
-            success: function (Result) {
-
-                for (var i in Result) {
-                    var WayPointName = Result[i].WayPointName;
-                    var WayPointValue = {
-                        value: Result[i].WayPointName,
-                        Latitude: Result[i].Latitude,
-                        Longitude: Result[i].Longitude,
-                        WayPointID: Result[i].WayPointID
-                    };
-                    currencies.push(WayPointValue);
-                }
-                // setup autocomplete function pulling from currencies[] array
-                $('#autocomplete').autocomplete({
-                    lookup: currencies,
-                    onSelect: function (suggestion) {
-                        //var thehtml = '<strong>Point:</strong> ' + suggestion.value + ' <br> <strong>Symbol:</strong> ' + suggestion.Latitude;                    
-                        document.getElementById('WayPointLabel').innerHTML = suggestion.value;
-                        document.getElementById('LatitudeLabel').innerHTML = suggestion.Latitude;
-                        document.getElementById('LongitudeLabel').innerHTML = suggestion.Longitude;
-                        var thehtml = '<strong>Point:</strong> ' + suggestion.value + ' <br> <strong>Symbol:</strong> ' + suggestion.Latitude;
-                        $('#outputcontent').html(thehtml);
-                    }
-                });
-            },
-            error: function (Result) {
-                alert("Error");
-            }
-        });
-    }
-    catch (e) {
-        errorReport(e);
-    }
-
-
 
 }

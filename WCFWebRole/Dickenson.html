@@ -1,6 +1,6 @@
 ﻿<html>
 <ead>
-    <title>Dickenson Map</title>
+    <title>Dickinson Map</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
     <!--<meta name="viewport" content="initial-scale=1.0">-->
     <meta charset="utf-8">
@@ -159,9 +159,11 @@
                     centerControlDiv.index = 1;
                     map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
 
-                    AddTiling(map);
+
                     KMLAdded = false;
                     AddKML(map);
+                    
+                    AddTiling(map);
 
                     SetMarkerMain(BaseLatMarker, BaseLngMarker, 'test');
 

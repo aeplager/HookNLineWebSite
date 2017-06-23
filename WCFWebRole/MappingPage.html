@@ -1,6 +1,6 @@
 ﻿<html>
 <head>
-    <title>Map 20</title>
+    <title>Map 21</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
     <!--<meta name="viewport" content="initial-scale=1.0">-->
     <meta charset="utf-8">
@@ -49,7 +49,7 @@ function initMap() {
     });
 
     myLatLng = { lat: BaseLatMarker, lng: BaseLngMarker };
-
+    
     
     contentString = '<div class="infoWindowDiv"></div>';
     infowindow = new google.maps.InfoWindow({
@@ -118,6 +118,7 @@ function initMap() {
         }
   
     });
+    
     // Try HTML5 geolocation.
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
@@ -163,10 +164,29 @@ function initMap() {
     AddTiling(map);
     KMLAdded = false;
     AddKML(map);
-
+    
     SetMarkerMain(BaseLatMarker, BaseLngMarker, 'test');
     
     MainMapTypeId = map.getMapTypeId();
+    map.setZoom(12);
+    google.maps.event.addListener(map, 'maptypeid_changed', function () {
+        var MapColorDetector = map.getMapTypeId();
+        if (MapColorDetector == 'terrain')
+        {
+            
+            $(".LIClassBlack").css("color", "black");
+            $(".LIClass").css("color", "black");
+        }
+        else if (MapColorDetector == 'roadmap')
+        {
+            $(".LIClassBlack").css("color", "black");
+            $(".LIClass").css("color", "black");
+        }
+        else {
+            $(".LIClassBlack").css("color", "white");
+            $(".LIClass").css("color", "white");
+        }        
+    });
     
 }
 function PickAPoint() {
@@ -404,7 +424,7 @@ function RefreshMap()
 }
 function GoToCurrentPosition() {
     try {
-        alert("Me");
+        //alert("Me");
         //var StringforDisplay = "Starting";
         ////alert(StringforDisplay);
         ////var myLatLng = { lat: 29.481, lng: -94.917 };
@@ -444,6 +464,7 @@ function SetMarkerMain(latBase, lngBase, msg)
     });
 
 }
+
     </script>
     <div id="LoginPage">
         <img src="images/HookNLineLogo.png" />
@@ -471,24 +492,36 @@ function SetMarkerMain(latBase, lngBase, msg)
         </table>
     </div>
     <div id="map" hidden="true"></div>
-    <div id="SelectPoint">
+    <div id="MapSelection" hidden="true">
+        <select id="MapSelectorComboBox" size="3">
+            <option value="1">F-102 A Galveston Bay</option>
+            <option value="2">F-102 D Dickinson Bay</option>
+            <option value="5">F-103 A Galveston Bay Wade & Kayak Fishing</option>
+        </select>
+        <br />
 
-    </div>    
+        <input type="button" value="Obtain Selected Map" onclick="ObtainSelectedMap()" />
+    </div>
+    <div id="SelectPoint">
+        <div id="SelectPoint">
+
+        </div>
+        <!--<div id="SearchableMenu" class="login-card" hidden="true">-->
         <div id="SearchableMenu" hidden="true">
             <div id="w">
                 <div id="content">
-                    <label class="LabelClass">Select a Point V8</label>
+                    <label class="LabelClass">Select a Point V7</label>
                     <div id="searchfield">
-                    <form>
-                        <input type="text" name="currency" class="biginput" id="autocomplete">
-                    </form>
+                        <form>
+                            <input type="text" name="currency" class="biginput" id="autocomplete">
+                        </form>
                         <br />
                     </div>
-                <!-- @end #searchfield -->
+                    <!-- @end #searchfield -->
                     <input type="button" id="SubmitPoint" onclick="PickAPoint();" value="Submit" />
                     <input type="button" id="CancelPoint" onclick="CancelButton();" value="Cancel" />
 
-                    <div hidden ="true" id="outputbox">
+                    <div hidden="true" id="outputbox">
                         <p id="outputcontent">Choose a point and the results will display here.</p>
                         <label hidden="true" id="WayPointLabel"></label>
                         <label hidden="true" id="LatitudeLabel"></label>
@@ -499,7 +532,7 @@ function SetMarkerMain(latBase, lngBase, msg)
                 </div><!-- @end #content -->
             </div><!-- @end #w -->
         </div>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsFW2qz_e9OYYsTVQok9ZakQuTMEIxovU&callback=initMap"
-              async defer></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsFW2qz_e9OYYsTVQok9ZakQuTMEIxovU&callback=initMap"
+                  async defer></script>
 </body>
 </html>
