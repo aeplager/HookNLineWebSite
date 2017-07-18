@@ -3,18 +3,18 @@
     try {
         if (MapSelection == 1)
             {
-            AddOverLayMap(map, 'https://qkss.com/HooknLine/TILES/TrinityBay/', 29.376639, -95.097300, 29.801420, -94.353477);
-            AddOverLayMap(map, 'https://qkss.com/HooknLine/TILES/WestBay/', 28.993955, -95.309236, 29.385521, -94.814655);            
+            AddOverLayMap(map, 'https://qkss.com/HooknLine/TILES/TrinityBay/', 29.376639, -95.097300, 29.801420, -94.353477, 29.636316, -94.802452);
+            AddOverLayMap(map, 'https://qkss.com/HooknLine/TILES/WestBay/', 28.993955, -95.309236, 29.385521, -94.814655, 29.636316, -94.802452);
         }
         else if (MapSelection==5)
         {
             // Test Subject
-            AddOverLayMap(map, 'https://qkss.com/HooknLine/TILES/TrinityBay/', 29.376639, -95.097300, 29.801420, -94.353477);
-            AddOverLayMap(map, 'https://qkss.com/HooknLine/TILES/WestBay/', 28.993955, -95.309236, 29.385521, -94.814655);
+            AddOverLayMap(map, 'https://qkss.com/HooknLine/TILES/TrinityBay/', 29.376639, -95.097300, 29.801420, -94.353477, 29.636316, -94.802452);
+            AddOverLayMap(map, 'https://qkss.com/HooknLine/TILES/WestBay/', 28.993955, -95.309236, 29.385521, -94.814655, 29.636316, -94.802452);
         }
         else 
         {
-            AddOverLayMap(map, 'https://qkss.com/HooknLine/TILES/DickensonBay/', 29.407933, -94.96053, 29.504333, -94.875166);
+            AddOverLayMap(map, 'https://qkss.com/HooknLine/TILES/DickensonBay/', 29.407933, -94.96053, 29.504333, -94.875166, 29.451049, -94.910108);
         }
     }
     catch(e)
@@ -63,7 +63,7 @@ function AddKML(map)
         ErrorFunction(e);
     }
 }
-function AddOverLayMap(map, URL,lat1, lng1, lat2, Lng2)
+function AddOverLayMap(map, URL,lat1, lng1, lat2, Lng2, LatCenter, LngCenter)
 {
     try{
         var mapTilerTrinityBayURL = URL;//'http://qkss.com/HooknLine/TILES/TrinityBay/';
@@ -94,7 +94,7 @@ function AddOverLayMap(map, URL,lat1, lng1, lat2, Lng2)
             opacity: 1.0
         });
         map.overlayMapTypes.insertAt(0, maptilerTrinityBay);
-        map.setCenter(new google.maps.LatLng(lat2, Lng2));
+        map.setCenter(new google.maps.LatLng(LatCenter, LngCenter));
 }
     catch(e)
 {        

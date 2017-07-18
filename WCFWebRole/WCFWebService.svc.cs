@@ -273,6 +273,49 @@ namespace WCFWebRole
             }
             return StatusPasswordSet;
         }
+        public List<UserPurchases> UserPurchasesGetInfo(string UserName)
+        {
+            DataSet ds = new DataSet();
+            string ConnectionString = ReturnConnectionString();
+            List<UserPurchases> SelectionItemsinfo = new List<UserPurchases>();
+
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    string SqlCommandText = "[WebSite].[UserPurchasesGetInfo]";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = SqlCommandText;
+                    cmd.Parameters.AddWithValue("@UserName", UserName);                    
+                    cmd.Connection = con;
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        da.Fill(ds, "SelectionItems");
+                    }
+                }
+            }
+            
+            if (ds != null)
+            {
+                if (ds.Tables.Count > 0)
+                {
+                    if (ds.Tables["SelectionItems"].Rows.Count > 0)
+                    {
+                        foreach (DataRow dr in ds.Tables["SelectionItems"].Rows)
+                        {
+                            SelectionItemsinfo.Add(new UserPurchases
+                            {
+                                UserName = dr["UserName"].ToString(),
+                                MapSelectionsID = Convert.ToInt32(dr["MapSelectionsID"]),
+                                MapSelectionsName = dr["MapSelectionsName"].ToString()
+                            });
+                        }
+                    }
+                }
+            }
+            return SelectionItemsinfo;
+        }
+
 
         public string SendEmailForNewPassword(string UserName)
         {
@@ -429,64 +472,7 @@ namespace WCFWebRole
                 }
             }
             return StatusPasswordSet;
-
         }
-            
-        //public string SetNewPassword(string ResetKey, string NewPassword)
-        //{
-        //    //string StatusPasswordSet;
-        //    //StatusPasswordSet = "FAIL";
-        //    //DataSet ds = new DataSet();
-        //    //string ConnectionString = ReturnConnectionString();
-        //    //using (SqlConnection con = new SqlConnection(ConnectionString))
-        //    //{
-        //    //    using (SqlCommand cmd = new SqlCommand())
-        //    //    {
-        //    //        string SqlCommandText = "[WebSite].[UserNameResetUpsert]";
-        //    //        cmd.CommandType = CommandType.StoredProcedure;
-        //    //        cmd.CommandText = SqlCommandText;
-        //    //        cmd.Parameters.AddWithValue("@ResetKey", ResetKey);
-        //    //        cmd.Parameters.AddWithValue("@NewPassword", NewPassword);
-        //    //        cmd.Connection = con;
-        //    //        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
-        //    //        {
-        //    //            da.Fill(ds, "SelectionItems");
-        //    //        }
-        //    //    }
-        //    //}
-        //    //if (ds != null)
-        //    //{
-        //    //    if (ds.Tables.Count > 0)
-        //    //    {
-        //    //        if (ds.Tables["SelectionItems"].Rows.Count > 0)
-        //    //        {
-        //    //            foreach (DataRow dr in ds.Tables["SelectionItems"].Rows)
-        //    //            {
-        //    //                StatusPasswordSet = dr["Status"].ToString();
-        //    //                break;
-        //    //            }
-        //    //        }
-        //    //    }
-        //    //}
-        //    return "SUCCESS";
-
-        //}
-
-        //private String BaseURL()
-        //{
-        //    try
-        //    {
-        //        String ReturnBaseURL = ConfigurationManager.AppSettings["ReturnBaseString"];
-        //        return ReturnBaseURL;
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        String ReturnBaseURL = "https://hooknline.azurewebsites.net/";
-        //        return ReturnBaseURL;
-        //    }
-        //}
-
 
         private String ReturnConnectionString()
         {

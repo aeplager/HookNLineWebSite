@@ -131,6 +131,7 @@
         $("#LoginPage").hide();
         $("#SearchScreen").hide();
         $("#map").hide();
+        ResetUserPurchases();
         $('#MapSelection').show();
         //var MapColorDetector = map.getMapTypeId();
         //if (MapColorDetector == 'terrain') {
@@ -185,7 +186,7 @@ function LoginMain()
     try {
         //document.body.style.zoom = 1.0;
         urlMain = '/WCFWebService.svc/LoginValidation/';
-        var UserName = $("#UserNameEntry").val();
+        UserName = $("#UserNameEntry").val();
         var Password = $("#PassWrdEntry").val();
         Data = '?UserName=' + UserName + '&Password=' + Password;
         urlMain = urlMain + Data;
@@ -202,7 +203,7 @@ function LoginMain()
                     $("#LoginPage").hide();
                     $("#SearchScreen").hide();
                     $("#map").hide();
-                    $('#MapSelection').show();
+                    $('#MapSelection').show();                    
                     //document.getElementById('map').style.display = "block";
                     //initMap();
                     }
@@ -215,6 +216,7 @@ function LoginMain()
             },
             error: function (e) { alert("Error"); alert(e.responseText); }
         });
+        ResetUserPurchases();
     }
     catch (e) {
         ErrorFunction(e.message);
@@ -319,6 +321,8 @@ function ObtainSelectedMap() {
     try {
         // Sends you to the correct map        
         MapSelection = $('#MapSelectorComboBox').val();
+        if (MapSelection != null)
+            {
         //MapSelection = 1;
         $("#LoginPage").hide();
         $("#SearchScreen").hide();
@@ -330,6 +334,11 @@ function ObtainSelectedMap() {
         //initMap();
         // Change the Pick A Point List
         ResetPointSelector();        
+        }
+        else
+        {
+            alert('Please select a map');
+        }
         // Reset the Zoom Level
 
     }
@@ -390,7 +399,47 @@ function ResetPointSelector()
     catch (e) {
         errorReport(e);
     }
+}
+function ResetUserPurchases()
+{
+    try{
+        $('#MapSelectorComboBox').empty();
+        //
+        var urlMain = '/WCFWebService.svc/UserPurchasesGetInfo';
+        Data = '?UserName=' + UserName;
+        //    Data = '?MapDefinition=' = '"' + MapSelection + '"';
+        urlMain = urlMain + Data;
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            // Change Here To Change The Web Service Needed
+            //url: "/AzureHooknLineAjax.svc/HelloWorld",
+            url: urlMain,
+            // Change Here To Change The Parameters Needed
+            // data: "{}",
+            dataType: "json",
+            async: false,
+            success: function (Result) {
+
+                for (var i in Result) {
+                    var MapSelectionsID = Result[i].MapSelectionsID;
+                    var MapSelectionsName = Result[i].MapSelectionsName;
+                    $('#MapSelectorComboBox').append(new Option(MapSelectionsName, MapSelectionsID));                    
+                }               
+            },
+            error: function (Result) {
+                alert("Error");
+            }
+        });
 
 
+        //var text = 'fuck you ass hole';
+        //var val = 1;
+        //$('#MapSelectorComboBox').append(new Option(text, val));
+        
 
+    }
+    catch (e) {
+        errorReport(e);
+    }
 }

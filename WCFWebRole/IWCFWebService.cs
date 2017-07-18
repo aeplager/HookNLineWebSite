@@ -72,10 +72,12 @@ namespace WCFWebRole
           ResponseFormat = WebMessageFormat.Json,
           BodyStyle = WebMessageBodyStyle.Bare)]
         string SendEmailForNewPassword(string UserName);
-
-
-
         
+        [WebGet(UriTemplate = "/UserPurchasesGetInfo/?UserName={UserName}",
+          RequestFormat = WebMessageFormat.Json,
+          ResponseFormat = WebMessageFormat.Json,
+          BodyStyle = WebMessageBodyStyle.Bare)]
+        List<UserPurchases> UserPurchasesGetInfo(String UserName);
 
         // TODO: Add your service operations here
     }
@@ -184,25 +186,14 @@ namespace WCFWebRole
         [DataMember]
         public Double ForecastTemp { get; set; }
     }
-    // Use a data contract as illustrated in the sample below to add composite types to service operations.
-    //[DataContract]
-    //public class CompositeType
-    //{
-    //    bool boolValue = true;
-    //    string stringValue = "Hello ";
+    public class UserPurchases
+    {
+        [DataMember]
+        public String UserName { get; set; }
+        [DataMember]
+        public Int32 MapSelectionsID { get; set; }
+        [DataMember]
+        public String MapSelectionsName { get; set; }
 
-    //    [DataMember]
-    //    public bool BoolValue
-    //    {
-    //        get { return boolValue; }
-    //        set { boolValue = value; }
-    //    }
-
-    //    [DataMember]
-    //    public string StringValue
-    //    {
-    //        get { return stringValue; }
-    //        set { stringValue = value; }
-    //    }
-    //}
+    }
 }
