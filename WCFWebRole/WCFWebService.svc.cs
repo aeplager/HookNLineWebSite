@@ -166,9 +166,10 @@ namespace WCFWebRole
                             SelectionItemsinfo.Add(new WeatherForecast
                             {
                                 DateOfForecast = String.Format("{0:g}", dr["DateOfForecastCST"]),
-                                ForecastDate = String.Format("{0:MM/dd/yyyy hh:mm tt}", dr["ForecastDateTimeCST"]),
+                                //ForecastDate = String.Format("{0:MM/dd/yyyy hh:mm tt}", dr["ForecastDateTimeCST"]),
+                                ForecastDate = String.Format("{0:hh:mm tt}", dr["ForecastDateTimeCST"]),
                                 ForecastStatus = dr["WeatherCondition"].ToString(),
-                                ForecastTemp = Convert.ToDouble(dr["TempValue"]),
+                                ForecastTemp = String.Format("{0:0.00}", dr["TempValue"]),
 
                             });
                         }

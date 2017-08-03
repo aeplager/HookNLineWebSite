@@ -20,6 +20,11 @@
     var controlUL = document.createElement('UL');    
     controlUL.Name = "ULTest";
 
+    var controlULWeather = document.createElement('UL');
+    controlULWeather.Name = "ULWeather";
+
+
+
     var controlLI1 = document.createElement('LI');
     controlLI1.innerHTML = "Remove All Points";
     controlLI1.className = "";
@@ -34,12 +39,10 @@
             controlLI1.innerHTML = "Remove All Points";
         }
         });
-    //controlUL.appendChild(controlLI1);
-
-
-
+    
     var controlLI3 = document.createElement('LI');
     controlLI3.innerHTML = "Weather Real Time";
+    controlLI3.innerHTML = '<img id="WRTID" src="' + 'Images/WeatherRealTime5PercentWhite.png"' + ' alt="' + 'Locate Me"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>';
     controlLI3.id = "WRT";
     controlLI3.className = "LIClass";
     controlLI3.addEventListener('click', function () {
@@ -47,12 +50,14 @@
         CurrentLng = map.getCenter().lng();
         DisplayRealTimeWeather();
     });
-    controlUL.appendChild(controlLI3);
+    controlULWeather.appendChild(controlLI3);
 
     
 
     var controlLI4 = document.createElement('LI');
     controlLI4.innerHTML = "Weather Forecast";
+    controlLI4.innerHTML = '<img id="WFID" src="' + 'Images/WeatherForecastThickerLines25PercentWhite.png"' + ' alt="' + 'Locate Me"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>';
+
     controlLI4.id = "WF";
     controlLI4.className = "LIClass";
     controlLI4.addEventListener('click', function () {
@@ -60,16 +65,16 @@
         CurrentLng = map.getCenter().lng();        
         DisplayWeatherForecast();
     });
-    controlUL.appendChild(controlLI4);
+    controlULWeather.appendChild(controlLI4);
        
     
     var controlLI2 = document.createElement('LI');    
     controlLI2.innerHTML = "Pick A Spot";
+    controlLI2.innerHTML = '<img id="PAPID" src="' + 'Images/PickaSpotThickerlines5PercentWhite.png"' + ' alt="' + 'Pick A Spot"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>';
     controlLI2.className = "LIClass";
     controlLI2.id = "PickASpot1";
     controlLI2.addEventListener('click', function () {
-        CurrentZoom = map.getZoom();
-
+        CurrentZoom = map.getZoom();        
         CurrentLat = map.getCenter().lat();
         CurrentLng = map.getCenter().lng();
         document.getElementById('map').style.display = "none";
@@ -86,11 +91,13 @@
     controlUL.appendChild(controlLI2);
 
 
-
+    //controlLITest.innerHTML = '<img src="' + 'Images/SwitchMaps5Percent.png"' + ' alt="' + 'Switch Map"' + 'id="' + 'itemImg"' + ' style="' + 'float:right"' + '>';
 
     var controlLI70 = document.createElement('LI');
     controlLI70.id = "LM";
-    controlLI70.innerHTML = "Locate Me";
+    //controlLI70.innerHTML = "Locate Me";
+    controlLI70.innerHTML = '<img id="LMID" src="' + 'Images/LocateMe5PercentWhite.png"' + ' alt="' + 'Locate Me"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>';
+    //controlLI70.innerHTML = '<img src="' + 'Images/LocateMe5PercentWhite.png"' + ' alt="' + 'Locate Me"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>';
     controlLI70.className = "LIClass";
     controlLI70.addEventListener('click', function () {
         //GoToCurrentPosition();
@@ -118,9 +125,11 @@
         }
     });
     controlUL.appendChild(controlLI70);
-
+    
     var controlLITest = document.createElement('LI');
-    controlLITest.innerHTML = "Switch Maps";
+    //controlLITest.innerHTML = "Switch Maps";
+    //controlLITest.innerHTML = '"<img src="' + 'Images/SwitchMaps.png"' + ' alt="' + '2013 Toyota Tacoma"' + 'id="' + 'itemImg"' + ' style="' + 'float:left"' + '>"';
+    controlLITest.innerHTML = '<img id="SMID" src="' + 'Images/SwitchMaps5PercentWhite.png"' + ' alt="' + 'Switch Map"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>';
     controlLITest.id = "WF";
     controlLITest.className = "LIClass";
     controlLITest.addEventListener('click', function () {
@@ -132,30 +141,17 @@
         $("#SearchScreen").hide();
         $("#map").hide();
         ResetUserPurchases();
-        $('#MapSelection').show();
-        //var MapColorDetector = map.getMapTypeId();
-        //if (MapColorDetector == 'terrain') {
-
-        //    $(".LIClassBlack").css("color", "black");
-        //    $(".LIClass").css("color", "black");
-        //}
-        //else if (MapColorDetector == 'roadmap') {
-        //    $(".LIClassBlack").css("color", "black");
-        //    $(".LIClass").css("color", "black");
-        //}
-        //else {
-        //    $(".LIClassBlack").css("color", "white");
-        //    $(".LIClass").css("color", "white");
-        //}
+        $('#MapSelection').show(); 
 
         map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
 
     });
     controlUL.appendChild(controlLITest);
 
+    controlUI.appendChild(controlUL);
 
-    controlUI.appendChild(controlUL);    
-    
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(controlUI);
+    map.controls[google.maps.ControlPosition.LEFT_TOP].push(controlULWeather);
 
 }
 function CloseInfoWindowAndMoveMarker()
@@ -185,6 +181,7 @@ function LoginMain()
 {    
     try {
         //document.body.style.zoom = 1.0;
+        
         urlMain = '/WCFWebService.svc/LoginValidation/';
         UserName = $("#UserNameEntry").val();
         var Password = $("#PassWrdEntry").val();
@@ -206,6 +203,10 @@ function LoginMain()
                     $('#MapSelection').show();                    
                     //document.getElementById('map').style.display = "block";
                     //initMap();
+                    }
+                    else if (Result == "RELOAD") {                        
+                        //window.location.reload();
+                        location.reload(true);
                     }
                     else
                     {
@@ -400,6 +401,7 @@ function ResetPointSelector()
         errorReport(e);
     }
 }
+
 function ResetUserPurchases()
 {
     try{
@@ -420,24 +422,48 @@ function ResetUserPurchases()
             dataType: "json",
             async: false,
             success: function (Result) {
-
+                var iRow = -1;
+                var SelectedItem = 'N/A';
+                ///$('select[name="dept"]').val('3');
                 for (var i in Result) {
                     var MapSelectionsID = Result[i].MapSelectionsID;
                     var MapSelectionsName = Result[i].MapSelectionsName;
-                    $('#MapSelectorComboBox').append(new Option(MapSelectionsName, MapSelectionsID));                    
-                }               
+                    if (iRow == -1) {
+                        iRow = MapSelectionsID;
+                        SelectedItem = MapSelectionsName
+                    }                    
+                    $('#MapSelectorComboBox').append(new Option(MapSelectionsName, MapSelectionsID));
+
+
+                }                
+                $("#MapSelectorComboBox").val(iRow);
             },
             error: function (Result) {
                 alert("Error");
             }
         });
-
-
-        //var text = 'fuck you ass hole';
-        //var val = 1;
-        //$('#MapSelectorComboBox').append(new Option(text, val));
-        
-
+    }
+    catch (e) {
+        errorReport(e);
+    }
+}
+function CancelButtonObtainMap()
+{
+    try {
+        //alert('Cancel Button Map');
+        if (MapSelection == -1)
+        {
+            // Go Login Screen            
+            window.location.reload(true); 
+        }
+        {
+            // Go to original map
+            $("#LoginPage").hide();
+            $("#SearchScreen").hide();
+            $('#MapSelection').hide();
+            $("#map").show();
+            
+        }
     }
     catch (e) {
         errorReport(e);

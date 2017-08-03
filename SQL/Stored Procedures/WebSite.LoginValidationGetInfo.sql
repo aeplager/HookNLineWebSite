@@ -34,9 +34,13 @@ BEGIN
 				,EmailSent = 1
 				WHERE UPPER(RTRIM(LTRIM(UserName))) = UPPER(RTRIM(LTRIM(@UserName)))
 
-			SELECT UserName, (CASE WHEN UPPER(RTRIM(LTRIM(Password))) = UPPER(RTRIM(LTRIM(@Password))) THEN 'PASS' ELSE @Password END) as Status
+			SELECT UserName, (CASE WHEN [RefreshPage] = 0 THEN 'RELOAD' ELSE (CASE WHEN UPPER(RTRIM(LTRIM(Password))) = UPPER(RTRIM(LTRIM(@Password))) THEN 'PASS' ELSE @Password END) END) as Status
 				FROM [WebSite].[UserNames]
 				WHERE UPPER(RTRIM(LTRIM(UserName))) = UPPER(RTRIM(LTRIM(@UserName)))
+			
+			UPDATE [WebSite].[UserNames] SET RefreshPage = 1
+				WHERE UPPER(RTRIM(LTRIM(UserName))) = UPPER(RTRIM(LTRIM(@UserName)))
+
 		END
 	ELSE
 		BEGIN

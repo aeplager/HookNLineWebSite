@@ -1,6 +1,6 @@
 ﻿<html>
 <head>
-    <title>Map 21</title>
+    <title>Map 24</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
     <!--<meta name="viewport" content="initial-scale=1.0">-->
     <meta charset="utf-8">
@@ -35,8 +35,12 @@
         var CurrentLat = 29.376639;
         var CurrentLng = -95.097300;
         var MainMapTypeId = 'satellite'
-        var MapSelection = 1;
+        var MapSelection = - 1;
         var UserName;
+        //var controlLI2;
+        $.wakeUp(function (sleep_time) {
+            alert("I have slept for " + sleep_time / 1000 + " seconds")
+        });
 function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: CurrentLat, lng: CurrentLng },
@@ -90,32 +94,8 @@ function initMap() {
         // marker.
         //ResetMapType();
         MainMapTypeId = map.getMapTypeId();
-        MainMapTypeId = map.getMapTypeId();
-        if (MainMapTypeId == 'satellite') {
-            $("#WRT").attr('class', 'LIClass');
-            $("#WF").attr('class', 'LIClass');
-            $("#PickASpot1").attr('class', 'LIClass');
-            $("#LM").attr('class', 'LIClass');
-        }
-        else if (MainMapTypeId == 'terrain')
-        {
-            $("#WRT").attr('class', 'LIClassBlack');
-            $("#WF").attr('class', 'LIClassBlack');
-            $("#PickASpot1").attr('class', 'LIClassBlack');
-            $("#LM").attr('class', 'LIClassBlack');
-        }            
-        else if (MainMapTypeId == 'hybrid') {
-            $("#WRT").attr('class', 'LIClass');
-            $("#WF").attr('class', 'LIClass');
-            $("#PickASpot1").attr('class', 'LIClass');
-            $("#LM").attr('class', 'LIClass');
-        }
-        else {
-            $("#WRT").attr('class', 'LIClassBlack');
-            $("#WF").attr('class', 'LIClassBlack');
-            $("#PickASpot1").attr('class', 'LIClassBlack');
-            $("#LM").attr('class', 'LIClassBlack');
-        }
+        SetColorOfIcons();
+ 
   
     });
     
@@ -293,13 +273,14 @@ function PickAPoint() {
             },
             error: function (e) { alert("Error"); alert(e.responseText); }
         });
+        // Check for the type of terrain and set appropriately
+
     }
     catch (e) {
         ErrorFunction(e);
     }
 
 }
-
 function CancelButton() {
     try {
 
@@ -452,6 +433,82 @@ function GoToCurrentPosition() {
         alert(e.message);
     }
 }
+
+function SetColorOfIcons() {
+    //MainMapTypeId = map.getMapTypeId();
+
+    //alert(MainMapTypeId);
+    if (MainMapTypeId == 'satellite') {
+        $("#WRT").attr('class', 'LIClass');
+        $("#WF").attr('class', 'LIClass');
+        $("#PickASpot1").attr('class', 'LIClass');
+        $("#LM").attr('class', 'LIClass');
+        // Change to White            
+        // WRTID Real Time Weather
+        // WFID Weather Forecast
+        // PAPID Pick A Spot
+        // LMID Locate Me
+        // SMID Switch Map
+        //alert('position 2');
+        document.getElementById("WRTID").src = "Images/WeatherRealTime5PercentWhite.png";
+        document.getElementById("WFID").src = "Images/WeatherForecastThickerLines25PercentWhite.png";
+        //alert('position 3');
+
+
+
+        document.getElementById("PAPID").src = "Images/PickaSpotThickerlines5PercentWhite.png";
+        document.getElementById("SMID").src = "Images/SwitchMaps5PercentWhite.png";
+        document.getElementById("LMID").src = "Images/LocateMe5PercentWhite.png";
+    }
+    else if (MainMapTypeId == 'terrain') {
+        //alert('Terrain');
+        $("#WRT").attr('class', 'LIClassBlack');
+        $("#WF").attr('class', 'LIClassBlack');
+        $("#PickASpot1").attr('class', 'LIClassBlack');
+        $("#LM").attr('class', 'LIClassBlack');
+        // Change to Black
+        document.getElementById("WFID").src = "Images/WeatherForecastThickerLines25Percent.png";
+        document.getElementById("WRTID").src = "Images/WeatherRealTime5Percent.png";
+
+
+        document.getElementById("PAPID").src = "Images/PickaSpotThickerlines5Percent.png";
+        document.getElementById("SMID").src = "Images/SwitchMaps5Percent.png";
+        document.getElementById("LMID").src = "Images/LocateMe5Percent.png";
+    }
+    else if (MainMapTypeId == 'hybrid') {
+        // White
+        // alert('Hybrid');
+        $("#WRT").attr('class', 'LIClass');
+        $("#WF").attr('class', 'LIClass');
+        $("#PickASpot1").attr('class', 'LIClass');
+        $("#LM").attr('class', 'LIClass');
+
+        document.getElementById("WFID").src = "Images/WeatherForecastThickerLines25PercentWhite.png";
+        document.getElementById("WRTID").src = "Images/WeatherRealTime5PercentWhite.png";
+
+
+        document.getElementById("PAPID").src = "Images/PickaSpotThickerlines5PercentWhite.png";
+        document.getElementById("SMID").src = "Images/SwitchMaps5PercentWhite.png";
+        document.getElementById("LMID").src = "Images/LocateMe5PercentWhite.png";
+
+    }
+    else {
+        // Black
+        $("#WRT").attr('class', 'LIClassBlack');
+        $("#WF").attr('class', 'LIClassBlack');
+        $("#PickASpot1").attr('class', 'LIClassBlack');
+        $("#LM").attr('class', 'LIClassBlack');
+        document.getElementById("WFID").src = "Images/WeatherForecastThickerLines25Percent.png";
+        document.getElementById("WRTID").src = "Images/WeatherRealTime5Percent.png";
+
+
+        document.getElementById("PAPID").src = "Images/PickaSpotThickerlines5Percent.png";
+        document.getElementById("SMID").src = "Images/SwitchMaps5Percent.png";
+        document.getElementById("LMID").src = "Images/LocateMe5Percent.png";
+    }
+}
+
+
 function SetMarkerMain(latBase, lngBase, msg)
 {
     var myLatLng = { lat: latBase, lng: lngBase};
@@ -469,23 +526,20 @@ function SetMarkerMain(latBase, lngBase, msg)
     <div id="LoginPage">
         <img src="images/HookNLineLogo.png" />
         <br />
-            <label>User name</label>
-            <br />
-            <input id="UserNameEntry" type="text" name="usr" placeholder="username">
-            <br />
-            <label>Password</label>
-            <br />
-            <input id="PassWrdEntry" type="password" name="pword" placeholder="password">
-            <br />
-        <table class="LogInTable">
+        <label>User name</label>
+        <br />
+        <input id="UserNameEntry" type="text" name="usr" placeholder="username">
+        <br />
+        <label>Password</label>
+        <br />
+        <input id="PassWrdEntry" type="password" name="pword" placeholder="password">
+        <br />
+        <table class="ButtonTable">
             <tr>
-                <td>
+                <td style="padding: 5px">
                     <input type="button" value="Login" width="100%" onclick="LoginMain();" />
                 </td>
-                <td>
-                        
-                </td>
-                <td>
+                <td style="padding: 5px">
                     <input type="button" value="Reset Password" width="100%" onclick="ResetPassword();" />
                 </td>
             </tr>
@@ -496,11 +550,19 @@ function SetMarkerMain(latBase, lngBase, msg)
         <select id="MapSelectorComboBox" size="3">
             <option value="1">F-102 A Galveston Bay</option>
             <option value="2">F-102 D Dickinson Bay</option>
-            <option value="5">F-103 A Galveston Bay Wade & Kayak Fishing</option>
+            <option value="5">F-104 A Galveston Bay Wade & Kayak Fishing</option>
         </select>
         <br />
-
-        <input type="button" value="Obtain Selected Map" onclick="ObtainSelectedMap()" />
+        <table class="ButtonTable" >
+            <tr>
+                <td style="padding: 5px">
+                    <input type="button" value="Obtain Selected Map" onclick="ObtainSelectedMap()" />
+                </td>
+                <td style="padding: 5px">
+                    <input type="button" id="CancelPoint" onclick="CancelButtonObtainMap();" value="Cancel" />
+                </td>
+            </tr>
+        </table>
     </div>
     <div id="SelectPoint">
         <div id="SelectPoint">
@@ -518,18 +580,24 @@ function SetMarkerMain(latBase, lngBase, msg)
                         <br />
                     </div>
                     <!-- @end #searchfield -->
-                    <input type="button" id="SubmitPoint" onclick="PickAPoint();" value="Submit" />
-                    <input type="button" id="CancelPoint" onclick="CancelButton();" value="Cancel" />
+                    <table class="ButtonTable">
+                        <tr>
+                            <td style="padding: 5px">
+                                <input type="button" id="SubmitPoint" onclick="PickAPoint();" value="Submit" />
+                            </td>
+                            <td style="padding: 5px">
+                                <input type="button" id="CancelPoint" onclick="CancelButton();" value="Cancel" />
+                            </td>
+                        </table>
+                                <div hidden="true" id="outputbox">
+                                    <p id="outputcontent">Choose a point and the results will display here.</p>
+                                    <label hidden="true" id="WayPointLabel"></label>
+                                    <label hidden="true" id="LatitudeLabel"></label>
+                                    <label hidden="true" id="LongitudeLabel"></label>
 
-                    <div hidden="true" id="outputbox">
-                        <p id="outputcontent">Choose a point and the results will display here.</p>
-                        <label hidden="true" id="WayPointLabel"></label>
-                        <label hidden="true" id="LatitudeLabel"></label>
-                        <label hidden="true" id="LongitudeLabel"></label>
+                                </div>
 
-                    </div>
-
-                </div><!-- @end #content -->
+</div><!-- @end #content -->
             </div><!-- @end #w -->
         </div>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsFW2qz_e9OYYsTVQok9ZakQuTMEIxovU&callback=initMap"

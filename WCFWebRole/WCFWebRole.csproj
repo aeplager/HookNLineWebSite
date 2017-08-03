@@ -41,8 +41,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GemBox.Email, Version=11.3.30.1002, Culture=neutral, PublicKeyToken=b1b72c69714d4847, processorArchitecture=MSIL">
-      <HintPath>..\packages\GemBox.Email.11.3.30.1002\lib\net30\GemBox.Email.dll</HintPath>
+    <Reference Include="GemBox.Email, Version=11.3.30.1012, Culture=neutral, PublicKeyToken=b1b72c69714d4847, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\GemBox.Email.11.3.30.1012\lib\net30\GemBox.Email.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -99,73 +100,23 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\de\Microsoft.Data.Edm.resources.dll" />
-    <Content Include="bin\de\Microsoft.Data.OData.resources.dll" />
-    <Content Include="bin\de\Microsoft.Data.Services.Client.resources.dll" />
-    <Content Include="bin\de\System.Spatial.resources.dll" />
-    <Content Include="bin\es\Microsoft.Data.Edm.resources.dll" />
-    <Content Include="bin\es\Microsoft.Data.OData.resources.dll" />
-    <Content Include="bin\es\Microsoft.Data.Services.Client.resources.dll" />
-    <Content Include="bin\es\System.Spatial.resources.dll" />
-    <Content Include="bin\fr\Microsoft.Data.Edm.resources.dll" />
-    <Content Include="bin\fr\Microsoft.Data.OData.resources.dll" />
-    <Content Include="bin\fr\Microsoft.Data.Services.Client.resources.dll" />
-    <Content Include="bin\fr\System.Spatial.resources.dll" />
-    <Content Include="bin\GemBox.Email.dll" />
-    <Content Include="bin\GemBox.Email.xml" />
-    <Content Include="bin\it\Microsoft.Data.Edm.resources.dll" />
-    <Content Include="bin\it\Microsoft.Data.OData.resources.dll" />
-    <Content Include="bin\it\Microsoft.Data.Services.Client.resources.dll" />
-    <Content Include="bin\it\System.Spatial.resources.dll" />
-    <Content Include="bin\ja\Microsoft.Data.Edm.resources.dll" />
-    <Content Include="bin\ja\Microsoft.Data.OData.resources.dll" />
-    <Content Include="bin\ja\Microsoft.Data.Services.Client.resources.dll" />
-    <Content Include="bin\ja\System.Spatial.resources.dll" />
-    <Content Include="bin\ko\Microsoft.Data.Edm.resources.dll" />
-    <Content Include="bin\ko\Microsoft.Data.OData.resources.dll" />
-    <Content Include="bin\ko\Microsoft.Data.Services.Client.resources.dll" />
-    <Content Include="bin\ko\System.Spatial.resources.dll" />
-    <Content Include="bin\Microsoft.Azure.KeyVault.Core.dll" />
-    <Content Include="bin\Microsoft.Azure.KeyVault.Core.xml" />
-    <Content Include="bin\Microsoft.Data.Edm.dll" />
-    <Content Include="bin\Microsoft.Data.Edm.xml" />
-    <Content Include="bin\Microsoft.Data.OData.dll" />
-    <Content Include="bin\Microsoft.Data.OData.xml" />
-    <Content Include="bin\Microsoft.Data.Services.Client.dll" />
-    <Content Include="bin\Microsoft.Data.Services.Client.xml" />
-    <Content Include="bin\Microsoft.WindowsAzure.Diagnostics.dll" />
-    <Content Include="bin\Microsoft.WindowsAzure.ServiceRuntime.dll" />
-    <Content Include="bin\Microsoft.WindowsAzure.Storage.dll" />
-    <Content Include="bin\Microsoft.WindowsAzure.Storage.pdb" />
-    <Content Include="bin\Microsoft.WindowsAzure.Storage.xml" />
-    <Content Include="bin\MonAgentListener.dll" />
-    <Content Include="bin\Newtonsoft.Json.dll" />
-    <Content Include="bin\Newtonsoft.Json.xml" />
-    <Content Include="bin\ru\Microsoft.Data.Edm.resources.dll" />
-    <Content Include="bin\ru\Microsoft.Data.OData.resources.dll" />
-    <Content Include="bin\ru\Microsoft.Data.Services.Client.resources.dll" />
-    <Content Include="bin\ru\System.Spatial.resources.dll" />
-    <Content Include="bin\System.Spatial.dll" />
-    <Content Include="bin\System.Spatial.xml" />
-    <Content Include="bin\WCFWebRole.dll" />
-    <Content Include="bin\WCFWebRole.pdb" />
-    <Content Include="bin\zh-Hans\Microsoft.Data.Edm.resources.dll" />
-    <Content Include="bin\zh-Hans\Microsoft.Data.OData.resources.dll" />
-    <Content Include="bin\zh-Hans\Microsoft.Data.Services.Client.resources.dll" />
-    <Content Include="bin\zh-Hans\System.Spatial.resources.dll" />
-    <Content Include="bin\zh-Hant\Microsoft.Data.Edm.resources.dll" />
-    <Content Include="bin\zh-Hant\Microsoft.Data.OData.resources.dll" />
-    <Content Include="bin\zh-Hant\Microsoft.Data.Services.Client.resources.dll" />
-    <Content Include="bin\zh-Hant\System.Spatial.resources.dll" />
     <Content Include="CSS\MappingPage.css" />
     <Content Include="CSS\style.css" />
+    <Content Include="images\LocateMe5Percent.png" />
+    <Content Include="images\PickaSpotThickerlines5Percent.png" />
+    <Content Include="images\PickaSpotThickerlines5PercentWhite.png" />
+    <Content Include="images\SwitchMaps5Percent.png" />
+    <Content Include="images\SwitchMaps5PercentWhite.png" />
+    <Content Include="images\WeatherForecastThickerLines25Percent.png" />
+    <Content Include="images\WeatherForecastThickerLines25PercentWhite.png" />
+    <Content Include="images\WeatherRealTime5Percent.png" />
+    <Content Include="images\WeatherRealTime5PercentWhite.png" />
     <Content Include="JS\NavigationControls - 20170616.js" />
     <Content Include="JS\TiledImageFiles - 20170616.js" />
-    <Content Include="MappingPage - 20170616.html" />
+    <Content Include="images\LocateMe5PercentWhite.png" />
     <Content Include="TryOfResubmitted.html" />
     <Content Include="TestingGoogleMaps.html" />
     <Content Include="googlemaps.html" />
-    <Content Include="TEST-Main.html" />
     <Content Include="HookNLinePasswordReset.html" />
     <Content Include="images\gpsloc.png" />
     <Content Include="images\gpslocSmall.png" />
@@ -186,6 +137,12 @@
     <Content Include="WCFWebService.svc" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="WCFAjax.svc.cs">
       <DependentUpon>WCFAjax.svc</DependentUpon>
     </Compile>
@@ -206,7 +163,6 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="bin\WCFWebRole.dll.config" />
     <None Include="Properties\PublishProfiles\hooknline - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

@@ -30,14 +30,14 @@ BEGIN
 	SET NOCOUNT ON;		
 	IF ISNULL((SELECT COUNT(*) FROM WebSite.UserNames WHERE UPPER(RTRIM(LTRIM(UserName))) = UPPER(RTRIM(LTRIM(@UserName)))),0) = 0
 		BEGIN
-			SELECT @UserName as UserName, 'N/A' as PSW, 0 as UserNameSetUp, 0 as Registered, 0 as SignedIn, 0 as LastSignInDate 
+			SELECT @UserName as UserName, 'N/A' as PSW, 0 as UserNameSetUp, 0 as Registered, 0 as SignedIn, 0 as LastSignInDate, CONVERT(INT,1) as RefreshPage
 		END
 	ELSE
 		BEGIN
-			SELECT UserName, Password as PSW, 1 as UserNameSetUp, ISNULL(Registered,0) as Registered, ISNULL(SignedIn,0) as SignedIn, ISNULL(LastSignInDate, CONVERT(DateTime, '1/1/1900')) as LastSignInDate
+			SELECT UserName, Password as PSW, 1 as UserNameSetUp, ISNULL(Registered,0) as Registered, ISNULL(SignedIn,0) as SignedIn, ISNULL(LastSignInDate, CONVERT(DateTime, '1/1/1900')) as LastSignInDate, CONVERT(INT,RefreshPage) as RefreshPage
 				FROM WebSite.UserNames
 				WHERE UPPER(RTRIM(LTRIM(UserName))) = UPPER(RTRIM(LTRIM(@UserName)))
-				GROUP BY UserName, Password, Registered, SignedIn, LastSignInDate
+				GROUP BY UserName, Password, Registered, SignedIn, LastSignInDate, RefreshPage
 		END
 END
 

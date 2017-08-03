@@ -21,6 +21,7 @@ CREATE TABLE [WebSite].[UserNames](
 	[SignedIn] [bit] NULL DEFAULT(0),	
 	[LastSignInDate] [datetime] NULL DEFAULT(GETDATE()), 
 	[EmailSent] [bit] NULL DEFAULT(0),
+	[RefreshPage] [bit] NULL DEFAULT(0),
 	[InsertDate] [datetime] NULL DEFAULT (getdate()),
 	[LastModifiedDate] [datetime] NULL DEFAULT (getdate()),
 PRIMARY KEY CLUSTERED 
@@ -30,7 +31,3 @@ PRIMARY KEY CLUSTERED
 )
 
 GO
-INSERT INTO WebSite.UserNames (UserName, Password)
-VALUES ('joetrom@sbcglobal.net', 'joe123')
-,('aeplager@qkss.com','apl')
-SELECT * FROM WebSite.UserNames 

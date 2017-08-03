@@ -48,3 +48,6 @@ PRIMARY KEY CLUSTERED
 GO
 
 GO
+CREATE NONCLUSTERED INDEX WebSiteWeatherForecastRealTimeFromTime  
+    ON WebSite.WeatherForecast ([RecordedTime], [FromTime], [WeatherStationID]);   
+GO 

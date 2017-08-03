@@ -184,7 +184,7 @@ namespace WCFWebRole
         [DataMember]
         public String ForecastStatus { get; set; }
         [DataMember]
-        public Double ForecastTemp { get; set; }
+        public String ForecastTemp { get; set; }
     }
     public class UserPurchases
     {
