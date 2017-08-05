@@ -42,15 +42,18 @@
             alert("I have slept for " + sleep_time / 1000 + " seconds")
         });
 function initMap() {
-    var map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: CurrentLat, lng: CurrentLng },
-        zoom: CurrentZoom,
-        mapTypeId:  MainMapTypeId 
-    });
-    infoWindow = new google.maps.InfoWindow({
-        map: map,
-        maxWidth: 200
-    });
+    try {
+            map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: CurrentLat, lng: CurrentLng },
+            zoom: CurrentZoom,
+            mapTypeId:  MainMapTypeId 
+        });
+        infoWindow = new google.maps.InfoWindow({
+            map: map,
+            maxWidth: 200
+        });
+        
+    
 
     myLatLng = { lat: BaseLatMarker, lng: BaseLngMarker };
     
@@ -95,8 +98,6 @@ function initMap() {
         //ResetMapType();
         MainMapTypeId = map.getMapTypeId();
         SetColorOfIcons();
- 
-  
     });
     
     // Try HTML5 geolocation.
@@ -146,9 +147,14 @@ function initMap() {
     AddKML(map);
     
     SetMarkerMain(BaseLatMarker, BaseLngMarker, 'test');
-    
+
+    //map.setMapTypeId(google.maps.MapTypeId.HYBRID);
+
     MainMapTypeId = map.getMapTypeId();
+
     map.setZoom(12);
+    //map.setMapTypeId(google.maps.MapTypeId.HYBRID);
+
     google.maps.event.addListener(map, 'maptypeid_changed', function () {
         var MapColorDetector = map.getMapTypeId();
         if (MapColorDetector == 'terrain')
@@ -167,8 +173,18 @@ function initMap() {
             $(".LIClass").css("color", "white");
         }        
     });
+
     
+    
+
+    }
+    catch (e) {
+        ErrorFunction(e);
+    }
 }
+
+
+
 function PickAPoint() {
     try {
         //document.body.style.zoom = 1.0;
@@ -281,17 +297,7 @@ function PickAPoint() {
     }
 
 }
-function CancelButton() {
-    try {
 
-        document.getElementById('map').style.display = "block";
-        initMap();
-        $("#SearchableMenu").hide();
-    }
-    catch (e) {
-        ErrorFunction(e.message);
-    }
-}
 function ReturnCenterOfScreen()
 {
     var ReturnCenter = map.getCenter();
@@ -507,7 +513,43 @@ function SetColorOfIcons() {
         document.getElementById("LMID").src = "Images/LocateMe5Percent.png";
     }
 }
+function CancelButtonObtainMap() {
+    try {
+        //alert('Cancel Button Map');
+        if (MapSelection == -1) {
+            // Go Login Screen            
+            window.location.reload(true);
+        }
+        {
 
+            // Go to original map
+            $("#LoginPage").hide();
+            $("#SearchScreen").hide();
+            $('#MapSelection').hide();
+            $('#SearchableMenu').hide();
+            $("#map").show();
+            document.getElementById('map').style.display = "block";
+            initMap();
+            $("#SearchableMenu").hide();
+
+            //document.getElementsByClassName("LIClass").remove();
+            //$('LIClass').remove();
+            //alert(MainMapTypeId);            
+           // map.setMapTypeId('terrain');
+            //MainMapTypeId = map.getMapTypeId();
+            //SetColorOfIcons();
+           
+
+
+        }
+    }
+    catch (e) {
+        errorReport(e);
+    }
+}
+function CancelButton() {
+    CancelButtonObtainMap();
+}
 
 function SetMarkerMain(latBase, lngBase, msg)
 {

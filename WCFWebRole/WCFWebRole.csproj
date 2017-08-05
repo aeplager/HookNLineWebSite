@@ -130,8 +130,6 @@
     <Content Include="JS\WeatherFunctions.js" />
     <Content Include="Dickenson.html" />
     <Content Include="MappingPage.html" />
-    <Content Include="Test.html" />
-    <Content Include="Test2.html" />
     <Content Include="TestPage.html" />
     <Content Include="WCFAjax.svc" />
     <Content Include="WCFWebService.svc" />

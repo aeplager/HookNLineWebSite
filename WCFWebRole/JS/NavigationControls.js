@@ -50,8 +50,8 @@
         CurrentLng = map.getCenter().lng();
         DisplayRealTimeWeather();
     });
-    controlULWeather.appendChild(controlLI3);
-
+    //controlULWeather.appendChild(controlLI3);
+    controlUI.appendChild(controlLI3);
     
 
     var controlLI4 = document.createElement('LI');
@@ -65,8 +65,8 @@
         CurrentLng = map.getCenter().lng();        
         DisplayWeatherForecast();
     });
-    controlULWeather.appendChild(controlLI4);
-       
+    //controlULWeather.appendChild(controlLI4);
+    controlUI.appendChild(controlLI4);
     
     var controlLI2 = document.createElement('LI');    
     controlLI2.innerHTML = "Pick A Spot";
@@ -78,6 +78,7 @@
         CurrentLat = map.getCenter().lat();
         CurrentLng = map.getCenter().lng();
         document.getElementById('map').style.display = "none";
+        MainMapTypeId = map.getMapTypeId();
         $("#SearchableMenu").show();
         //$("#map").hide();
         //document.getElementById("map").style.width = "0%"
@@ -148,10 +149,11 @@
     });
     controlUL.appendChild(controlLITest);
 
-    controlUI.appendChild(controlUL);
+    // Adding the UL
+    //controlUI.appendChild(controlUL);
 
-    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(controlUI);
-    map.controls[google.maps.ControlPosition.LEFT_TOP].push(controlULWeather);
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(controlUL);
+    //map.controls[google.maps.ControlPosition.LEFT_TOP].push(controlULWeather);
 
 }
 function CloseInfoWindowAndMoveMarker()
@@ -334,7 +336,12 @@ function ObtainSelectedMap() {
         $("#map").show();
         //initMap();
         // Change the Pick A Point List
-        ResetPointSelector();        
+        ResetPointSelector();
+
+        
+        
+        
+
         }
         else
         {
@@ -447,25 +454,8 @@ function ResetUserPurchases()
         errorReport(e);
     }
 }
-function CancelButtonObtainMap()
+
+function errorReport(e)
 {
-    try {
-        //alert('Cancel Button Map');
-        if (MapSelection == -1)
-        {
-            // Go Login Screen            
-            window.location.reload(true); 
-        }
-        {
-            // Go to original map
-            $("#LoginPage").hide();
-            $("#SearchScreen").hide();
-            $('#MapSelection').hide();
-            $("#map").show();
-            
-        }
-    }
-    catch (e) {
-        errorReport(e);
-    }
+    alert(e);
 }

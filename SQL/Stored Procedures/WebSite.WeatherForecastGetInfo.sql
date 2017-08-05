@@ -29,7 +29,7 @@ BEGIN
 	INSERT INTO #Tmp (FromTime, [RecordedTime])
 	SELECT FromTime, MAX([RecordedTime]) as MaxDate--, DATEADD(HOUR,-5,FromTime) as CalcCST--, GETDATE() CurrentDate
 		FROM [WebSite].[WeatherForecast] 
-		WHERE FromTime >= GETDATE()
+		WHERE FromTime >= GETDATE() AND FromTime <=DATEADD(HOUR,24,GETDATE())
 		GROUP BY FromTime
 	
 	SELECT DATEADD(HOUR,-5, T.RecordedTime) as DateOfForecastCST, DATEADD(HOUR,-5,T.FromTime) as ForecastDateTimeCST, W.[WeatherCondition], W.[TempValue]
