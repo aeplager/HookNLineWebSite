@@ -42,8 +42,12 @@
     
     var controlLI3 = document.createElement('LI');
     controlLI3.innerHTML = "Weather Real Time";
-    controlLI3.innerHTML = '<img id="WRTID" src="' + 'Images/WeatherRealTime5PercentWhite.png"' + ' alt="' + 'Locate Me"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>';
-    controlLI3.id = "WRT";
+    if ((MainMapTypeId == 'satellite') || (MainMapTypeId == 'hybrid'))
+        { controlLI3.innerHTML = '<img id="WRTID" src="' + 'Images/WeatherRealTime5PercentWhite.png"' + ' alt="' + 'Locate Me"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>'; }
+    else
+    { controlLI3.innerHTML = '<img id="WRTID" src="' + 'Images/WeatherRealTime5Percent.png"' + ' alt="' + 'Locate Me"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>'; }
+    
+        controlLI3.id = "WRT";
     controlLI3.className = "LIClass";
     controlLI3.addEventListener('click', function () {
         CurrentLat = map.getCenter().lat();
@@ -56,8 +60,10 @@
 
     var controlLI4 = document.createElement('LI');
     controlLI4.innerHTML = "Weather Forecast";
-    controlLI4.innerHTML = '<img id="WFID" src="' + 'Images/WeatherForecastThickerLines25PercentWhite.png"' + ' alt="' + 'Locate Me"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>';
-
+    if ((MainMapTypeId == 'satellite') || (MainMapTypeId == 'hybrid'))
+        { controlLI4.innerHTML = '<img id="WFID" src="' + 'Images/WeatherForecastThickerLines25PercentWhite.png"' + ' alt="' + 'Locate Me"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>'; }
+    else
+    { controlLI4.innerHTML = '<img id="WFID" src="' + 'Images/WeatherForecastThickerLines25Percent.png"' + ' alt="' + 'Locate Me"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>'; }
     controlLI4.id = "WF";
     controlLI4.className = "LIClass";
     controlLI4.addEventListener('click', function () {
@@ -70,7 +76,10 @@
     
     var controlLI2 = document.createElement('LI');    
     controlLI2.innerHTML = "Pick A Spot";
-    controlLI2.innerHTML = '<img id="PAPID" src="' + 'Images/PickaSpotThickerlines5PercentWhite.png"' + ' alt="' + 'Pick A Spot"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>';
+    if ((MainMapTypeId == 'satellite') || (MainMapTypeId == 'hybrid'))
+        { controlLI2.innerHTML = '<img id="PAPID" src="' + 'Images/PickaSpotThickerlines5PercentWhite.png"' + ' alt="' + 'Pick A Spot"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>'; }
+    else
+        { controlLI2.innerHTML = '<img id="PAPID" src="' + 'Images/PickaSpotThickerlines5Percent.png"' + ' alt="' + 'Pick A Spot"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>'; }
     controlLI2.className = "LIClass";
     controlLI2.id = "PickASpot1";
     controlLI2.addEventListener('click', function () {
@@ -97,40 +106,57 @@
     var controlLI70 = document.createElement('LI');
     controlLI70.id = "LM";
     //controlLI70.innerHTML = "Locate Me";
-    controlLI70.innerHTML = '<img id="LMID" src="' + 'Images/LocateMe5PercentWhite.png"' + ' alt="' + 'Locate Me"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>';
+    if ((MainMapTypeId == 'satellite') || (MainMapTypeId == 'hybrid'))
+        { controlLI70.innerHTML = '<img id="LMID" src="' + 'Images/LocateMe5PercentWhite.png"' + ' alt="' + 'Locate Me"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>'; }
+    else
+        { controlLI70.innerHTML = '<img id="LMID" src="' + 'Images/LocateMe5Percent.png"' + ' alt="' + 'Locate Me"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>'; }
     //controlLI70.innerHTML = '<img src="' + 'Images/LocateMe5PercentWhite.png"' + ' alt="' + 'Locate Me"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>';
     controlLI70.className = "LIClass";
     controlLI70.addEventListener('click', function () {
+        try{
         //GoToCurrentPosition();
         var StringforDisplay = "Starting";
         //alert(StringforDisplay);
         //var myLatLng = { lat: 29.481, lng: -94.917 };
-        if (navigator.geolocation) {
+        //GeoMkrLat = position.coords.latitude;
+        //GeoMkrLng = position.coords.longitude;
+        //alert('Latitude: ' + GeoMkrLat + ' and Longitude: ' + GeoMkrLng);
+            //map.setCenter(GeoMkrLat, GeoMkrLng);
+        map.setCenter(new google.maps.LatLng(GeoMkrLat, GeoMkrLng));
+        //alert('Finished');
+        //if (navigator.geolocation) {
 
-            navigator.geolocation.getCurrentPosition(function (position) {
-                var pos = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                };
-                //CurrentMarker.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
-                //map.setCenter({ lat: 29.481, lng: -94.917 });
-                map.setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
-                //CurrentMarker.setMap(map);
-                //alert("Finished Internal 6");
-            }, function () {
-                handleLocationError(true, infoWindow, map.getCenter());
-            });
-        } else {
-            // Browser doesn't support Geolocation
-            handleLocationError(false, infoWindow, map.getCenter());
+        //    navigator.geolocation.getCurrentPosition(function (position) {
+        //        var pos = {
+        //            lat: position.coords.latitude,
+        //            lng: position.coords.longitude
+        //        };
+        //        //CurrentMarker.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+        //        //map.setCenter({ lat: 29.481, lng: -94.917 });
+        //        map.setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
+        //        //CurrentMarker.setMap(map);
+        //        //alert("Finished Internal 6");
+        //    }, function () {
+        //        handleLocationError(true, infoWindow, map.getCenter());
+        //    });
+        //} else {
+        //    // Browser doesn't support Geolocation
+        //    handleLocationError(false, infoWindow, map.getCenter());
+            //}
+        }
+        catch(e)
+        {
+            alert(e.message.toString());
         }
     });
     controlUL.appendChild(controlLI70);
     
-    var controlLITest = document.createElement('LI');
-    //controlLITest.innerHTML = "Switch Maps";
-    //controlLITest.innerHTML = '"<img src="' + 'Images/SwitchMaps.png"' + ' alt="' + '2013 Toyota Tacoma"' + 'id="' + 'itemImg"' + ' style="' + 'float:left"' + '>"';
-    controlLITest.innerHTML = '<img id="SMID" src="' + 'Images/SwitchMaps5PercentWhite.png"' + ' alt="' + 'Switch Map"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>';
+    var controlLITest = document.createElement('LI');    
+    if ((MainMapTypeId == 'satellite') || (MainMapTypeId ==  'hybrid'))
+       {controlLITest.innerHTML = '<img id="SMID" src="' + 'Images/SwitchMaps5PercentWhite.png"' + ' alt="' + 'Switch Map"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>';}
+    else
+    { controlLITest.innerHTML = '<img id="SMID" src="' + 'Images/SwitchMaps5Percent.png"' + ' alt="' + 'Switch Map"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>'; }
+    
     controlLITest.id = "WF";
     controlLITest.className = "LIClass";
     controlLITest.addEventListener('click', function () {
@@ -144,7 +170,7 @@
         ResetUserPurchases();
         $('#MapSelection').show(); 
 
-        map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
+        //map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
 
     });
     controlUL.appendChild(controlLITest);
@@ -322,8 +348,12 @@ function SubmitPassword() {
 
 function ObtainSelectedMap() {
     try {
-        // Sends you to the correct map        
-        MapSelection = $('#MapSelectorComboBox').val();
+        // Sends you to the correct map   
+       
+        //MapSelection = $("input:radio[name=RadioSelectorName]:checked").val(); //$('input[name=RadioSelectorName]:checked').val();
+        //getRadioValue('RadioSelectorName');
+        //$('input[name="RadioSelectorName"]:checked').val()
+        MapSelection = $('input[name="RadioSelectorName"]:checked').val();
         if (MapSelection != null)
             {
         //MapSelection = 1;
@@ -332,6 +362,7 @@ function ObtainSelectedMap() {
         $("#MapSelection").hide();
         
         document.getElementById('map').style.display = "block";
+        MainMapTypeId = map.getMapTypeId();        
         initMap();
         $("#map").show();
         //initMap();
@@ -412,8 +443,9 @@ function ResetPointSelector()
 function ResetUserPurchases()
 {
     try{
-        $('#MapSelectorComboBox').empty();
-        //
+
+        $('input[type=radio].RadioSelector').remove();
+        $('label[class=RadioLabelClass]').remove();
         var urlMain = '/WCFWebService.svc/UserPurchasesGetInfo';
         Data = '?UserName=' + UserName;
         //    Data = '?MapDefinition=' = '"' + MapSelection + '"';
@@ -431,19 +463,20 @@ function ResetUserPurchases()
             success: function (Result) {
                 var iRow = -1;
                 var SelectedItem = 'N/A';
-                ///$('select[name="dept"]').val('3');
+                
                 for (var i in Result) {
                     var MapSelectionsID = Result[i].MapSelectionsID;
                     var MapSelectionsName = Result[i].MapSelectionsName;
                     if (iRow == -1) {
                         iRow = MapSelectionsID;
                         SelectedItem = MapSelectionsName
-                    }                    
-                    $('#MapSelectorComboBox').append(new Option(MapSelectionsName, MapSelectionsID));
+                    }
+                    AddRadioButton(MapSelectionsID, MapSelectionsName);
+                    //$('#MapSelectorComboBox').append(new Option(MapSelectionsName, MapSelectionsID));
 
 
                 }                
-                $("#MapSelectorComboBox").val(iRow);
+                //$("#MapSelectorComboBox").val(iRow);
             },
             error: function (Result) {
                 alert("Error");
@@ -458,4 +491,64 @@ function ResetUserPurchases()
 function errorReport(e)
 {
     alert(e);
+}
+function ReplaceRadioSelection()
+{
+    try {
+
+        alert($('input[name="RadioSelectorName"]:checked').val());
+        //$('input[type=radio].RadioSelector').remove();
+        //$('label[class=RadioLabelClass]').remove();
+
+        //$('input[type=label].RadioLabel').remove();
+        //AddRadioButton('F-102A', 'Mapping Program');
+        //AddRadioButton('F-103A', 'Mapping Program 2');
+
+
+        alert('Remove Completed V8');
+    }
+    catch (e) {
+        errorReport(e);
+    }
+}
+function AddRadioButton (RadioValue, InnerHtml)
+{
+    try {
+        
+        var RadioButton = document.createElement('input');
+        RadioButton.setAttribute("type", "radio");
+        RadioButton.setAttribute("value", RadioValue);
+        RadioButton.setAttribute("name", "RadioSelectorName");
+        RadioButton.setAttribute("class", "RadioSelector");
+        
+        var RadioMainDiv = document.getElementById("SelectionRadioDiv");
+        RadioMainDiv.appendChild(RadioButton);
+
+        var RadioLabel = document.createElement('label');        
+        RadioLabel.innerHTML = InnerHtml + " </br>"
+        RadioLabel.setAttribute("class", "RadioLabelClass");
+        RadioMainDiv.appendChild(RadioLabel)
+  
+    }
+    catch (e) {
+        errorReport(e);
+    }
+}
+function getRadioValue(groupName) {
+    var radios = theFormName.elements[groupName];
+    window.rdValue; // declares the global variable 'rdValue'
+    for (var i = 0; i < radios.length; i++) {
+        var someRadio = radios[i];
+        if (someRadio.checked) {
+            rdValue = someRadio.value;
+            break;
+        }
+        else rdValue = 'noRadioChecked';
+    }
+    if (rdValue == '10') {
+        alert('10'); // or: console.log('10')
+    }
+    else if (rdValue == 'noRadioChecked') {
+        alert('no radio checked');
+    }
 }

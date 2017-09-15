@@ -104,3 +104,20 @@
 .ButtonTable th, td {
     padding: 15px;
 }
+
+.RadioSelector
+{
+    height:  14px;   
+    padding-bottom: 12px;
+    
+}
+.RadioLabelClass
+{
+    font-size: 14px;
+    padding-bottom: 12px;
+}
+.RadioHeaderLabelClass
+{
+    font-size: large;  
+    font-weight: bolder;  
+}
