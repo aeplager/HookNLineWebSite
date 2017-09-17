@@ -107,17 +107,21 @@
 
 .RadioSelector
 {
-    height:  14px;   
-    padding-bottom: 12px;
-    
+    height:  1.5em;   
+    width:  1.5em;   
+    padding-bottom: 1.5em;    
 }
 .RadioLabelClass
 {
-    font-size: 14px;
-    padding-bottom: 12px;
+    font-size: larger;
+    padding-bottom: 1.5em;   
 }
 .RadioHeaderLabelClass
 {
-    font-size: large;  
-    font-weight: bolder;  
+    font-size: larger;
+    font-weight: bolder; 
+    padding-bottom: 1.5em;   
 }
+
+
+

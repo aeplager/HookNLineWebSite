@@ -38,16 +38,16 @@
         {
             controlLI1.innerHTML = "Remove All Points";
         }
-        });
+    });
     
     var controlLI3 = document.createElement('LI');
     controlLI3.innerHTML = "Weather Real Time";
     if ((MainMapTypeId == 'satellite') || (MainMapTypeId == 'hybrid'))
-        { controlLI3.innerHTML = '<img id="WRTID" src="' + 'Images/WeatherRealTime5PercentWhite.png"' + ' alt="' + 'Locate Me"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>'; }
+    { controlLI3.innerHTML = '<img id="WRTID" src="' + 'Images/WeatherRealTime5PercentWhite.png"' + ' alt="' + 'Locate Me"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>'; }
     else
     { controlLI3.innerHTML = '<img id="WRTID" src="' + 'Images/WeatherRealTime5Percent.png"' + ' alt="' + 'Locate Me"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>'; }
     
-        controlLI3.id = "WRT";
+    controlLI3.id = "WRT";
     controlLI3.className = "LIClass";
     controlLI3.addEventListener('click', function () {
         CurrentLat = map.getCenter().lat();
@@ -61,7 +61,7 @@
     var controlLI4 = document.createElement('LI');
     controlLI4.innerHTML = "Weather Forecast";
     if ((MainMapTypeId == 'satellite') || (MainMapTypeId == 'hybrid'))
-        { controlLI4.innerHTML = '<img id="WFID" src="' + 'Images/WeatherForecastThickerLines25PercentWhite.png"' + ' alt="' + 'Locate Me"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>'; }
+    { controlLI4.innerHTML = '<img id="WFID" src="' + 'Images/WeatherForecastThickerLines25PercentWhite.png"' + ' alt="' + 'Locate Me"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>'; }
     else
     { controlLI4.innerHTML = '<img id="WFID" src="' + 'Images/WeatherForecastThickerLines25Percent.png"' + ' alt="' + 'Locate Me"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>'; }
     controlLI4.id = "WF";
@@ -77,9 +77,9 @@
     var controlLI2 = document.createElement('LI');    
     controlLI2.innerHTML = "Pick A Spot";
     if ((MainMapTypeId == 'satellite') || (MainMapTypeId == 'hybrid'))
-        { controlLI2.innerHTML = '<img id="PAPID" src="' + 'Images/PickaSpotThickerlines5PercentWhite.png"' + ' alt="' + 'Pick A Spot"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>'; }
+    { controlLI2.innerHTML = '<img id="PAPID" src="' + 'Images/PickaSpotThickerlines5PercentWhite.png"' + ' alt="' + 'Pick A Spot"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>'; }
     else
-        { controlLI2.innerHTML = '<img id="PAPID" src="' + 'Images/PickaSpotThickerlines5Percent.png"' + ' alt="' + 'Pick A Spot"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>'; }
+    { controlLI2.innerHTML = '<img id="PAPID" src="' + 'Images/PickaSpotThickerlines5Percent.png"' + ' alt="' + 'Pick A Spot"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>'; }
     controlLI2.className = "LIClass";
     controlLI2.id = "PickASpot1";
     controlLI2.addEventListener('click', function () {
@@ -107,41 +107,41 @@
     controlLI70.id = "LM";
     //controlLI70.innerHTML = "Locate Me";
     if ((MainMapTypeId == 'satellite') || (MainMapTypeId == 'hybrid'))
-        { controlLI70.innerHTML = '<img id="LMID" src="' + 'Images/LocateMe5PercentWhite.png"' + ' alt="' + 'Locate Me"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>'; }
+    { controlLI70.innerHTML = '<img id="LMID" src="' + 'Images/LocateMe5PercentWhite.png"' + ' alt="' + 'Locate Me"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>'; }
     else
-        { controlLI70.innerHTML = '<img id="LMID" src="' + 'Images/LocateMe5Percent.png"' + ' alt="' + 'Locate Me"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>'; }
+    { controlLI70.innerHTML = '<img id="LMID" src="' + 'Images/LocateMe5Percent.png"' + ' alt="' + 'Locate Me"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>'; }
     //controlLI70.innerHTML = '<img src="' + 'Images/LocateMe5PercentWhite.png"' + ' alt="' + 'Locate Me"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>';
     controlLI70.className = "LIClass";
     controlLI70.addEventListener('click', function () {
         try{
-        //GoToCurrentPosition();
-        var StringforDisplay = "Starting";
-        //alert(StringforDisplay);
-        //var myLatLng = { lat: 29.481, lng: -94.917 };
-        //GeoMkrLat = position.coords.latitude;
-        //GeoMkrLng = position.coords.longitude;
-        //alert('Latitude: ' + GeoMkrLat + ' and Longitude: ' + GeoMkrLng);
+            //GoToCurrentPosition();
+            var StringforDisplay = "Starting";
+            //alert(StringforDisplay);
+            //var myLatLng = { lat: 29.481, lng: -94.917 };
+            //GeoMkrLat = position.coords.latitude;
+            //GeoMkrLng = position.coords.longitude;
+            //alert('Latitude: ' + GeoMkrLat + ' and Longitude: ' + GeoMkrLng);
             //map.setCenter(GeoMkrLat, GeoMkrLng);
-        map.setCenter(new google.maps.LatLng(GeoMkrLat, GeoMkrLng));
-        //alert('Finished');
-        //if (navigator.geolocation) {
+            map.setCenter(new google.maps.LatLng(GeoMkrLat, GeoMkrLng));
+            //alert('Finished');
+            //if (navigator.geolocation) {
 
-        //    navigator.geolocation.getCurrentPosition(function (position) {
-        //        var pos = {
-        //            lat: position.coords.latitude,
-        //            lng: position.coords.longitude
-        //        };
-        //        //CurrentMarker.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
-        //        //map.setCenter({ lat: 29.481, lng: -94.917 });
-        //        map.setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
-        //        //CurrentMarker.setMap(map);
-        //        //alert("Finished Internal 6");
-        //    }, function () {
-        //        handleLocationError(true, infoWindow, map.getCenter());
-        //    });
-        //} else {
-        //    // Browser doesn't support Geolocation
-        //    handleLocationError(false, infoWindow, map.getCenter());
+            //    navigator.geolocation.getCurrentPosition(function (position) {
+            //        var pos = {
+            //            lat: position.coords.latitude,
+            //            lng: position.coords.longitude
+            //        };
+            //        //CurrentMarker.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+            //        //map.setCenter({ lat: 29.481, lng: -94.917 });
+            //        map.setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
+            //        //CurrentMarker.setMap(map);
+            //        //alert("Finished Internal 6");
+            //    }, function () {
+            //        handleLocationError(true, infoWindow, map.getCenter());
+            //    });
+            //} else {
+            //    // Browser doesn't support Geolocation
+            //    handleLocationError(false, infoWindow, map.getCenter());
             //}
         }
         catch(e)
@@ -150,31 +150,32 @@
         }
     });
     controlUL.appendChild(controlLI70);
+    if (blDisplayMapSelector==true)   
+        {
+            var controlLITest = document.createElement('LI');    
+            if ((MainMapTypeId == 'satellite') || (MainMapTypeId ==  'hybrid'))
+            {controlLITest.innerHTML = '<img id="SMID" src="' + 'Images/SwitchMaps5PercentWhite.png"' + ' alt="' + 'Switch Map"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>';}
+            else
+            { controlLITest.innerHTML = '<img id="SMID" src="' + 'Images/SwitchMaps5Percent.png"' + ' alt="' + 'Switch Map"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>'; }
     
-    var controlLITest = document.createElement('LI');    
-    if ((MainMapTypeId == 'satellite') || (MainMapTypeId ==  'hybrid'))
-       {controlLITest.innerHTML = '<img id="SMID" src="' + 'Images/SwitchMaps5PercentWhite.png"' + ' alt="' + 'Switch Map"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>';}
-    else
-    { controlLITest.innerHTML = '<img id="SMID" src="' + 'Images/SwitchMaps5Percent.png"' + ' alt="' + 'Switch Map"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>'; }
-    
-    controlLITest.id = "WF";
-    controlLITest.className = "LIClass";
-    controlLITest.addEventListener('click', function () {
-        // Change the map Image
-        //KMLAdded == false;
-        //MapSelection = $('#MapSelectorComboBox').val();
-        //AddKML(map);
-        $("#LoginPage").hide();
-        $("#SearchScreen").hide();
-        $("#map").hide();
-        ResetUserPurchases();
-        $('#MapSelection').show(); 
+            controlLITest.id = "WF";
+            controlLITest.className = "LIClass";
+            controlLITest.addEventListener('click', function () {
+                // Change the map Image
+                //KMLAdded == false;
+                //MapSelection = $('#MapSelectorComboBox').val();
+                //AddKML(map);
+                $("#LoginPage").hide();
+                $("#SearchScreen").hide();
+                $("#map").hide();
+                ResetUserPurchases();
+                $('#MapSelection').show(); 
 
-        //map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
+                //map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
 
-    });
-    controlUL.appendChild(controlLITest);
-
+            });
+            controlUL.appendChild(controlLITest);
+    }
     // Adding the UL
     //controlUI.appendChild(controlUL);
 
