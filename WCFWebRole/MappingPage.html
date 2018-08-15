@@ -36,10 +36,12 @@
         var CurrentLng = -95.097300;
         var MainMapTypeId = 'satellite'
         var MapSelection = -1;
+        var blDisplaySwitchMap = true;
         var GeoMkrLat = 0;
         var GeoMkrLng = 0;
         var UserName;
         var blDisplayMapSelector = true;
+        var RemoveSwapMaps = false;
         //var controlLI2;
         $.wakeUp(function (sleep_time) {
             alert("I have slept for " + sleep_time / 1000 + " seconds")
@@ -566,7 +568,7 @@ function SetMarkerMain(latBase, lngBase, msg)
     <div id="LoginPage">
         <img src="images/HookNLineLogo.png" />
         <br />
-        <label>User name</label>
+        <label class=MainPageLabel>User name</label>
         <br />
         <input id="UserNameEntry" type="text" name="usr" placeholder="username">
         <br />
@@ -584,7 +586,29 @@ function SetMarkerMain(latBase, lngBase, msg)
                 </td>
             </tr>
         </table>
-    </div>
+        <label class=MainPageLabel>Forgot your password? Follow the steps below:</label>
+        <br />
+        <table>
+            <tr><td>1.	Type in a <label class=MainPageLabel>VALID</label> User Name (User Name = the email address you used when you purchased the app).</td></tr>
+            <tr><td>2.	Click “Reset Password” button. <label class=MainPageLabel>ONE TIME ONLY.</label></td></tr>
+            <tr><td>3.	You will get a message “Please wait 5-10 minutes for an email with instructions on how to reset your password”. Note that the email will come in on the same email address as your “User name”.</td></tr>
+            <tr><td>4.	Open the email and enter a new password. Keep it simple so you can remember it.  You can always follow these steps and enter a different password when you get home from your fishing trip.</td>
+        </tr></table>
+        <br />
+        <label class=MainPageLabel>Got an error message?</label>
+        <br />
+        <table>
+            <tr><td>A.	If you receive an error message doing the above steps, you will have to go back and start over.</td></tr>
+            <tr><td>B.	Begin by clicking this link: <a href="https://hooknline.azurewebsites.net/MappingPage.html">Hook N Line Web Site</a></td></tr>
+            <tr><td>C.  Type in a <label class=MainPageLabel>VALID</label> User Name (User Name = the email address you used when you purchased the app)</td></tr>
+            <tr><td>D.	Click “Reset Password” button. <label class=MainPageLabel>ONE TIME ONLY.</label></td></tr>
+            <tr><td>E.	Follow the prompts (Note: do not click the “login” button or you will get another error message).</td></tr>
+            <tr><td>F.	If you get another error message, start over with step A.</td></tr>
+            <tr><td>G.	If none of this works, give us a call at 281-286-6554</td></tr>            
+        </table>
+
+
+</div>
     <div id="map" hidden="true"></div>
     <div id="MapSelection" hidden="true">
         <!--<select id="MapSelectorComboBox" size="3">

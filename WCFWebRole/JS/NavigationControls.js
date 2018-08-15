@@ -150,32 +150,40 @@
         }
     });
     controlUL.appendChild(controlLI70);
-    if (blDisplayMapSelector==true)   
-        {
-            var controlLITest = document.createElement('LI');    
-            if ((MainMapTypeId == 'satellite') || (MainMapTypeId ==  'hybrid'))
-            {controlLITest.innerHTML = '<img id="SMID" src="' + 'Images/SwitchMaps5PercentWhite.png"' + ' alt="' + 'Switch Map"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>';}
-            else
-            { controlLITest.innerHTML = '<img id="SMID" src="' + 'Images/SwitchMaps5Percent.png"' + ' alt="' + 'Switch Map"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>'; }
+    var controlLITest = document.createElement('LI');    
+            
+    if ((MainMapTypeId == 'satellite') || (MainMapTypeId ==  'hybrid'))
+    {controlLITest.innerHTML = '<img id="SMID" src="' + 'Images/SwitchMaps5PercentWhite.png"' + ' alt="' + 'Switch Map"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>';}
+    else
+    { controlLITest.innerHTML = '<img id="SMID" src="' + 'Images/SwitchMaps5Percent.png"' + ' alt="' + 'Switch Map"' + 'id="' + 'itemImg"' + ' style="' + 'float:center"' + '>'; }
+    if (blDisplaySwitchMap == false)
+    { controlLITest.innerHTML = ''; }
+    controlLITest.id = "WF";
+    controlLITest.className = "LIClass";
     
-            controlLITest.id = "WF";
-            controlLITest.className = "LIClass";
-            controlLITest.addEventListener('click', function () {
-                // Change the map Image
-                //KMLAdded == false;
-                //MapSelection = $('#MapSelectorComboBox').val();
-                //AddKML(map);
-                $("#LoginPage").hide();
-                $("#SearchScreen").hide();
-                $("#map").hide();
-                ResetUserPurchases();
-                $('#MapSelection').show(); 
+    //if (blDisplaySwitchMap != false)
+    //    {
+    controlLITest.addEventListener('click', function () {
+        // Change the map Image
+        //KMLAdded == false;
+        //MapSelection = $('#MapSelectorComboBox').val();
+        //AddKML(map);
+        $("#LoginPage").hide();
+        $("#SearchScreen").hide();
+        $("#map").hide();
+        ResetUserPurchases();
+        $('#MapSelection').show(); 
 
-                //map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
+        //map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
 
-            });
-            controlUL.appendChild(controlLITest);
+    });
+    if (blDisplayMapSelector == false)
+    {
+        controlLITest.hidden = true;
     }
+            
+            controlUL.appendChild(controlLITest);
+    //}
     // Adding the UL
     //controlUI.appendChild(controlUL);
 
@@ -255,7 +263,39 @@ function LoginMain()
 
 function ResetPassword()
 {
-    try {        
+    try {
+        // Check if email exists
+        urlMain = '/WCFWebService.svc/UserNameValidation/';
+        var ValidUser = 0;
+        var UserName = $("#UserNameEntry").val();
+        if (UserName.trim() == '') {
+            alert('Please enter a user name');
+            return
+        }        
+        Data = '?UserName=' + UserName;
+        //alert("Sending your user name and passwordafddafa");
+        urlMain = urlMain + Data;
+        jQuery.ajax({
+            type: 'GET',
+            contentType: 'application/json;  charset=utf-8',
+            url: urlMain,
+            dataType: 'json',
+            async: false,
+            success: function (Result) {
+                try {                    
+                    ValidUser = Result;
+                }
+                catch (e) { alert(e); }
+            },
+            error: function (e) { alert("Error"); alert(e.responseText); }
+        });
+        if (ValidUser == 0) 
+        {
+            alert("Please enter a valid user name");
+            return;
+        }
+        //Send email
+
         urlMain = '/WCFWebService.svc/SendEmailForNewPassword/';
         var UserName = $("#UserNameEntry").val();
         if (UserName.trim() == '') {
@@ -272,13 +312,14 @@ function ResetPassword()
             dataType: 'json',
             async: true,
             success: function (Result) {
-                try {
+                try {                    
                     var Sheet = Result;
                 }
                 catch (e) { alert(e); }
             },
             error: function (e) { alert("Error"); alert(e.responseText); }
         });
+        
         alert("Please wait 5 - 10 minutes for an email with instructions on how to reset your password");
         }
     }

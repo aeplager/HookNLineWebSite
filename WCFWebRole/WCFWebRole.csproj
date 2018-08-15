@@ -101,7 +101,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CSS\MappingPage.css" />
+    <Content Include="CSS\MappingPageReset.css" />
     <Content Include="CSS\style.css" />
+    <Content Include="Dickenson.html" />
     <Content Include="images\LocateMe5Percent.png" />
     <Content Include="images\PickaSpotThickerlines5Percent.png" />
     <Content Include="images\PickaSpotThickerlines5PercentWhite.png" />
@@ -111,8 +113,6 @@
     <Content Include="images\WeatherForecastThickerLines25PercentWhite.png" />
     <Content Include="images\WeatherRealTime5Percent.png" />
     <Content Include="images\WeatherRealTime5PercentWhite.png" />
-    <Content Include="JS\NavigationControls - 20170616.js" />
-    <Content Include="JS\TiledImageFiles - 20170616.js" />
     <Content Include="images\LocateMe5PercentWhite.png" />
     <Content Include="TryOfResubmitted.html" />
     <Content Include="TestingGoogleMaps.html" />
@@ -128,7 +128,7 @@
     <Content Include="JS\Points-autocomplete.js" />
     <Content Include="JS\TiledImageFiles.js" />
     <Content Include="JS\WeatherFunctions.js" />
-    <Content Include="Dickenson.html" />
+    <Content Include="DickensonOLD.html" />
     <Content Include="MappingPage.html" />
     <Content Include="TestPage.html" />
     <Content Include="WCFAjax.svc" />

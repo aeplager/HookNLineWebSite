@@ -79,6 +79,25 @@ namespace WCFWebRole
           BodyStyle = WebMessageBodyStyle.Bare)]
         List<UserPurchases> UserPurchasesGetInfo(String UserName);
 
+
+        [WebGet(UriTemplate = "/UserNameValidation/?UserName={UserName}",
+           RequestFormat = WebMessageFormat.Json,
+           ResponseFormat = WebMessageFormat.Json,
+           BodyStyle = WebMessageBodyStyle.Bare)]
+        int UserNameValidation(String UserName);
+
+
+        [WebGet(UriTemplate = "/TestOfEntryRunningScheduler",
+           RequestFormat = WebMessageFormat.Json,
+           ResponseFormat = WebMessageFormat.Json,
+           BodyStyle = WebMessageBodyStyle.Bare)]
+        int TestOfEntryRunningScheduler();
+
+        [WebGet(UriTemplate = "/RunHookNLineStuff",
+           RequestFormat = WebMessageFormat.Json,
+           ResponseFormat = WebMessageFormat.Json,
+           BodyStyle = WebMessageBodyStyle.Bare)]
+        int RunHookNLineStuff(); 
         // TODO: Add your service operations here
     }
     [DataContract]
@@ -196,4 +215,10 @@ namespace WCFWebRole
         public String MapSelectionsName { get; set; }
 
     }
+    public class MapsToPrint
+    {
+        public String MapName;
+        public int MapSelectionID;
+    }
+
 }

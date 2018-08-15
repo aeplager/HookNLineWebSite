@@ -31,31 +31,29 @@ BEGIN
 	DECLARE @RandChar VARCHAR(5) = (SELECT (CONVERT(INT,RAND()*100000)) as RandomChar)
 	DECLARE @PSW AS VARCHAR(250) = (SELECT [Password] FROM [WebSite].[UserNames] WHERE RTRIM(LTRIM([UserName])) = @UserName)
 	DECLARE @CurrentDate DATETIME = GETDATE()
-	UPDATE [WebSite].[UserNameReset] SET [Reset] = 1
-		WHERE [CurrentUserName] = @UserName 
-
-INSERT INTO [WebSite].[UserNameReset]
-           (
-		   [CurrentUserName]
-           ,[CurrentPassword] 
-		   ,[NewPassword]          
-           ,[Reset]
-           ,[ResetStartDate]
-           ,[ResetKey]
-           ,[InsertDate]
-           ,[LastModifiedDate]
-		   )
-     VALUES
-			(
-			@UserName
-           ,@PSW 
-		   ,@PSW
-           ,1
-           ,@CurrentDate 
-           ,@RandChar
-           ,@CurrentDate 
-           ,@CurrentDate 
-			)
+	UPDATE [WebSite].[UserNameReset] SET [Reset] = 1 WHERE [CurrentUserName] = @UserName 
+	INSERT INTO [WebSite].[UserNameReset]
+			   (
+			   [CurrentUserName]
+			   ,[CurrentPassword] 
+			   ,[NewPassword]          
+			   ,[Reset]
+			   ,[ResetStartDate]
+			   ,[ResetKey]
+			   ,[InsertDate]
+			   ,[LastModifiedDate]
+			   )
+		 VALUES
+				(
+				@UserName 
+			   ,@PSW 
+			   ,@PSW
+			   ,1
+			   ,@CurrentDate 
+			   ,@RandChar
+			   ,@CurrentDate 
+			   ,@CurrentDate 
+				)
 	SELECT @RandChar as RandChar
 END
 
@@ -63,5 +61,5 @@ END
 
 GO
 DECLARE @UserName VARCHAR(250), @ResetKey VARCHAR(250), @NewPassword VARCHAR(250)
-SET @UserName = 'aeplager@qkss.com'
+SET @UserName = 'cedrictech1@gmail.com '
 EXEC [WebSite].[UserNameSetupUpsert] @UserName

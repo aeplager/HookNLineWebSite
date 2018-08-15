@@ -1,15 +1,21 @@
+USE [HookNLine]
+GO
+
+/****** Object:  StoredProcedure [WebSite].[LoginValidationGetInfo]    Script Date: 10/3/2017 4:55:30 PM ******/
+
 /****** Object:  StoredProcedure [Import].[GraphLFChartGetInfo]    Script Date: 05/11/2015 16:14:35 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[WebSite].[LoginValidationGetInfo]') AND type in (N'P', N'PC'))
 DROP PROCEDURE [WebSite].[LoginValidationGetInfo]
 GO
 
 
-/****** Object:  StoredProcedure [Import].[GraphLFChartGetInfo]    Script Date: 05/11/2015 16:14:35 ******/
+/****** Object:  StoredProcedure [WebSite].[LoginValidationGetInfo]    Script Date: 10/3/2017 4:55:30 PM ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
+
 
 
 
@@ -40,7 +46,8 @@ BEGIN
 			
 			UPDATE [WebSite].[UserNames] SET RefreshPage = 1
 				WHERE UPPER(RTRIM(LTRIM(UserName))) = UPPER(RTRIM(LTRIM(@UserName)))
-
+			-- Remove previous reset password
+			DELETE FROM [WebSite].[UserNameReset] WHERE UPPER(RTRIM(LTRIM([CurrentUserName]))) = UPPER(RTRIM(LTRIM(@UserName)))
 		END
 	ELSE
 		BEGIN
@@ -52,8 +59,7 @@ END
 
 
 
+
 GO
-DECLARE @UserName VARCHAR(250), @ResetKey VARCHAR(250), @NewPassword VARCHAR(250)
-SET @UserName = 'aeplager@qkss.com'
-SET @NewPassword = 'apl'
-EXEC [WebSite].[LoginValidationGetInfo] @UserName, @NewPassword 
+
+
